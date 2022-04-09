@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:fyp/core/widgets/main_drawer.dart';
 
 class Notify extends StatefulWidget {
+  const Notify({Key? key}) : super(key: key);
+
   @override
   State<Notify> createState() => _NotifyState();
 }
@@ -26,9 +28,9 @@ class _NotifyState extends State<Notify> {
                   scaffoldKey.currentState?.openDrawer();
                 }),
             backgroundColor: Colors.white,
-            actions: <Widget>[
+            actions: const <Widget>[
               Padding(
-                padding: const EdgeInsets.fromLTRB(0, 30, 130, 0),
+                padding: EdgeInsets.fromLTRB(0, 30, 130, 0),
                 child: Text("Notification",
                     style: TextStyle(
                       fontSize: 20,
@@ -38,7 +40,7 @@ class _NotifyState extends State<Notify> {
             ],
           ),
         ),
-        drawer: MainDrawer(),
-        body: SingleChildScrollView(child: Column(children: [])));
+        drawer: const MainDrawer(),
+        body: SingleChildScrollView(child: Column(children: const [])));
   }
 }

@@ -2,17 +2,11 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:http/http.dart';
-
-import '../core/models/user/user.dart';
 import 'package:http_parser/http_parser.dart';
 
-class DjangoApi {
-  // DjangoApi._private();
-  //
-  // static final DjangoApi _instance = DjangoApi._private();
-  //
-  // factory DjangoApi() => _instance;
+import '../core/models/user/user.dart';
 
+class DjangoApi {
   static Future<User?> createUser(String email, String password,
       {String? firstName, String? lastName}) async {
     final response = await post(

@@ -1,6 +1,3 @@
-import 'dart:async';
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:fyp/core/widgets/main_drawer.dart';
 import 'package:fyp/feature/artist/views/chords/behemoth.dart';

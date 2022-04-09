@@ -3,12 +3,15 @@ import 'package:fyp/core/widgets/main_drawer.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class AddSongs extends StatefulWidget {
+  const AddSongs({Key? key}) : super(key: key);
+
   @override
   AddSongsState createState() => AddSongsState();
 }
 
 class AddSongsState extends State<AddSongs> {
   var scaffoldKey = GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,9 +30,9 @@ class AddSongsState extends State<AddSongs> {
                   scaffoldKey.currentState?.openDrawer();
                 }),
             backgroundColor: Colors.white,
-            actions: <Widget>[
+            actions: const <Widget>[
               Padding(
-                padding: const EdgeInsets.fromLTRB(0, 30, 150, 0),
+                padding: EdgeInsets.fromLTRB(0, 30, 150, 0),
                 child: Text("Add Songs",
                     style: TextStyle(
                       fontSize: 20,
@@ -39,9 +42,9 @@ class AddSongsState extends State<AddSongs> {
             ],
           ),
         ),
-        drawer: MainDrawer(),
+        drawer: const MainDrawer(),
         body: Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
                 image: DecorationImage(
                     image: AssetImage('images/about4.jpg'), fit: BoxFit.cover)),
             child: Column(children: [
@@ -50,36 +53,36 @@ class AddSongsState extends State<AddSongs> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Container(
-                        padding: EdgeInsets.only(top: 100),
+                        padding: const EdgeInsets.only(top: 100),
                         child: Column(children: [
-                          VxTextField(
+                          const VxTextField(
                             fillColor: Colors.white,
                             hint: 'Enter Song Title',
                             borderType: VxTextFieldBorderType.roundLine,
                           ),
-                          SizedBox(height: 30),
-                          VxTextField(
+                          const SizedBox(height: 30),
+                          const VxTextField(
                             fillColor: Colors.white,
                             hint: 'Enter Artist',
                             borderType: VxTextFieldBorderType.roundLine,
                           ),
                           Container(
-                              padding: EdgeInsets.only(left: 10, top: 30),
+                              padding: const EdgeInsets.only(left: 10, top: 30),
                               child: Row(children: [
                                 Container(
-                                  decoration: BoxDecoration(
+                                  decoration: const BoxDecoration(
                                     color: Colors.black,
                                   ),
-                                  child: Icon(
+                                  child: const Icon(
                                     Icons.add,
                                     color: Colors.white,
                                     size: 30,
                                   ),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   width: 10.0,
                                 ),
-                                Text(
+                                const Text(
                                   "Upload Your Songs",
                                   style: TextStyle(
                                     color: Colors.white,
@@ -87,7 +90,7 @@ class AddSongsState extends State<AddSongs> {
                                 )
                               ])),
                           Container(
-                              padding: EdgeInsets.only(left: 10, top: 30),
+                              padding: const EdgeInsets.only(left: 10, top: 30),
                               child: Row(
                                   mainAxisSize: MainAxisSize.min,
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -95,8 +98,7 @@ class AddSongsState extends State<AddSongs> {
                                     RaisedButton(
                                       color: Colors.white,
                                       shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(18.0),
+                                        borderRadius: BorderRadius.circular(18.0),
                                         side: const BorderSide(),
                                       ),
                                       onPressed: () async {},
@@ -105,15 +107,14 @@ class AddSongsState extends State<AddSongs> {
                                       child: const Text("Upload",
                                           style: TextStyle(fontSize: 15)),
                                     ),
-                                    SizedBox(
+                                    const SizedBox(
                                       height: 49,
                                       width: 80,
                                     ),
                                     RaisedButton(
                                       color: Colors.white,
                                       shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(18.0),
+                                        borderRadius: BorderRadius.circular(18.0),
                                         side: const BorderSide(),
                                       ),
                                       onPressed: () async {},

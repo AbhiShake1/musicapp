@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import '../../../api/django_api.dart';
 import 'package:velocity_x/velocity_x.dart';
 
+import '../../../api/django_api.dart';
 import '../../../core/providers/loading_provider.dart';
 
 class SignupPage extends HookWidget {
@@ -46,9 +46,7 @@ class SignupPage extends HookWidget {
               child: const Text(
                 'Lyrics and Chords',
                 style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 26,
-                    fontWeight: FontWeight.w700),
+                    color: Colors.white, fontSize: 26, fontWeight: FontWeight.w700),
               ),
             ),
             SingleChildScrollView(
@@ -143,8 +141,7 @@ class SignupPage extends HookWidget {
                           final isChecked = useState(false);
                           return Checkbox(
                             checkColor: Colors.white,
-                            fillColor:
-                                MaterialStateProperty.resolveWith(getColor),
+                            fillColor: MaterialStateProperty.resolveWith(getColor),
                             value: isChecked.value,
                             onChanged: (bool? value) {
                               isChecked.value = value!;
@@ -186,12 +183,10 @@ class SignupPage extends HookWidget {
                             onPressed: () async {
                               if (_emailKey.currentState!.validate() &&
                                   _passwordKey.currentState!.validate() &&
-                                  _confirmPasswordKey.currentState!
-                                      .validate()) {
+                                  _confirmPasswordKey.currentState!.validate()) {
                                 ref.read(loadingRef.notifier).loading = true;
                                 final userDetails = await DjangoApi.createUser(
-                                    emailController.text,
-                                    passwordController.text,
+                                    emailController.text, passwordController.text,
                                     firstName: firstNameController.text,
                                     lastName: lastNameController.text);
                                 ref.read(loadingRef.notifier).loading = false;
@@ -208,8 +203,8 @@ class SignupPage extends HookWidget {
                                 ? const CircularProgressIndicator()
                                 : const Text(
                                     "Sign up",
-                                    style: TextStyle(
-                                        fontSize: 15, color: Colors.white),
+                                    style:
+                                        TextStyle(fontSize: 15, color: Colors.white),
                                   ),
                           ),
                         ),

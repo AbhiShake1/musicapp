@@ -40,9 +40,11 @@ const $User = _$UserTearOff();
 /// @nodoc
 mixin _$User {
   String get userName => throw _privateConstructorUsedError;
+
   String get email => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+
   @JsonKey(ignore: true)
   $UserCopyWith<User> get copyWith => throw _privateConstructorUsedError;
 }
@@ -51,6 +53,7 @@ mixin _$User {
 abstract class $UserCopyWith<$Res> {
   factory $UserCopyWith(User value, $Res Function(User) then) =
       _$UserCopyWithImpl<$Res>;
+
   $Res call({String userName, String email});
 }
 
@@ -59,6 +62,7 @@ class _$UserCopyWithImpl<$Res> implements $UserCopyWith<$Res> {
   _$UserCopyWithImpl(this._value, this._then);
 
   final User _value;
+
   // ignore: unused_field
   final $Res Function(User) _then;
 
@@ -84,6 +88,7 @@ class _$UserCopyWithImpl<$Res> implements $UserCopyWith<$Res> {
 abstract class _$UserCopyWith<$Res> implements $UserCopyWith<$Res> {
   factory _$UserCopyWith(_User value, $Res Function(_User) then) =
       __$UserCopyWithImpl<$Res>;
+
   @override
   $Res call({String userName, String email});
 }
@@ -149,8 +154,7 @@ class _$_User implements _User {
 
   @JsonKey(ignore: true)
   @override
-  _$UserCopyWith<_User> get copyWith =>
-      __$UserCopyWithImpl<_User>(this, _$identity);
+  _$UserCopyWith<_User> get copyWith => __$UserCopyWithImpl<_User>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -165,8 +169,10 @@ abstract class _User implements User {
 
   @override
   String get userName;
+
   @override
   String get email;
+
   @override
   @JsonKey(ignore: true)
   _$UserCopyWith<_User> get copyWith => throw _privateConstructorUsedError;

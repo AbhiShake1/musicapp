@@ -1,6 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-
 import 'package:fyp/core/widgets/main_drawer.dart';
 import 'package:fyp/feature/Karaoke/karaoke.dart';
 import 'package:fyp/feature/Mysongs/views/Mysongs.dart';
@@ -23,6 +22,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   var scaffoldKey = GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,7 +57,7 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       extendBodyBehindAppBar: true,
-      drawer: MainDrawer(),
+      drawer: const MainDrawer(),
       body: Container(
         color: Colors.black,
         child: Column(
@@ -106,8 +106,7 @@ class _HomePageState extends State<HomePage> {
                           },
                           child: Container(
                             decoration: const BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(20)),
+                                borderRadius: BorderRadius.all(Radius.circular(20)),
                                 image: DecorationImage(
                                     image: AssetImage('images/artist.jpg'),
                                     fit: BoxFit.cover)),
@@ -134,8 +133,7 @@ class _HomePageState extends State<HomePage> {
                               onPressed: () {
                                 Navigator.push(
                                   context,
-                                  MaterialPageRoute(
-                                      builder: (context) => Karaoke()),
+                                  MaterialPageRoute(builder: (context) => Karaoke()),
                                 );
                               },
                               child: Container(
@@ -143,8 +141,7 @@ class _HomePageState extends State<HomePage> {
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(20)),
                                     image: DecorationImage(
-                                        image:
-                                            AssetImage('images/karaoke.webp'),
+                                        image: AssetImage('images/karaoke.webp'),
                                         fit: BoxFit.fill)),
                                 height: 40,
                                 width: 50,
@@ -204,7 +201,7 @@ class _HomePageState extends State<HomePage> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => AddSongs()),
+                                    builder: (context) => const AddSongs()),
                               );
                             },
                             child: Container(
@@ -242,7 +239,7 @@ class _HomePageState extends State<HomePage> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => Mysongs()),
+                                    builder: (context) => const Mysongs()),
                               );
                             },
                             child: Container(
@@ -277,7 +274,7 @@ class _HomePageState extends State<HomePage> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => contact()),
+                                      builder: (context) => const Contact()),
                                 );
                               },
                               child: Container(
@@ -285,8 +282,7 @@ class _HomePageState extends State<HomePage> {
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(20)),
                                     image: DecorationImage(
-                                        image:
-                                            AssetImage('images/about_us.jpg'),
+                                        image: AssetImage('images/about_us.jpg'),
                                         fit: BoxFit.cover)),
                                 height: 40,
                                 width: 50,
@@ -317,16 +313,16 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _buildPopupDialog(BuildContext context) {
-    return new AlertDialog(
+    return AlertDialog(
       backgroundColor: Colors.black,
       title: const Text(
         'Request a song',
         style: TextStyle(color: Colors.white),
       ),
-      content: new Column(
+      content: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
+        children: const <Widget>[
           VxTextField(
             fillColor: Colors.white,
             hint: 'Enter Artist Name',
@@ -341,12 +337,12 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       actions: <Widget>[
-        new FlatButton(
+        FlatButton(
           onPressed: () {},
           textColor: Colors.white,
           child: const Text('Cancel'),
         ),
-        new FlatButton(
+        FlatButton(
           onPressed: () {},
           textColor: Colors.white,
           child: const Text('Request'),

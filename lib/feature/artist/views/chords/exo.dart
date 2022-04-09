@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:fyp/core/widgets/main_drawer.dart';
 import 'package:fyp/feature/artist/addpage.dart';
@@ -96,8 +94,7 @@ class EXOState extends State<EXO> {
                           ))),
                   onTap: () {
                     SfPdfViewer.asset('pdf/exo1.pdf',
-                        controller: _pdfViewerController,
-                        key: _pdfViewerStateKey);
+                        controller: _pdfViewerController, key: _pdfViewerStateKey);
                   },
                   title: const Text(
                     'Call me baby',
@@ -131,8 +128,7 @@ class EXOState extends State<EXO> {
                       )),
                   onTap: () {
                     SfPdfViewer.asset('pdf/exo23.pdf',
-                        controller: _pdfViewerController,
-                        key: _pdfViewerStateKey);
+                        controller: _pdfViewerController, key: _pdfViewerStateKey);
                   },
                   title: const Text(
                     'Monster',

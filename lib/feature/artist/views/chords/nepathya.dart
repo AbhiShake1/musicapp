@@ -1,8 +1,5 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:fyp/core/widgets/main_drawer.dart';
-import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
 class Nepathya extends StatefulWidget {
   @override

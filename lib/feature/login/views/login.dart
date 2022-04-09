@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:fyp/api/django_api.dart';
 import 'package:fyp/core/providers/current_user_provider.dart';
 import 'package:fyp/core/widgets/bottom_nav_bar/views/bottom_nav_bar.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:velocity_x/velocity_x.dart';
 

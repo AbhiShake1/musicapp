@@ -2,8 +2,17 @@ import 'package:contactus/contactus.dart';
 import 'package:flutter/material.dart';
 import 'package:fyp/core/widgets/main_drawer.dart';
 
-class contact extends StatelessWidget {
+//stateful for (const) performance optimization
+class Contact extends StatefulWidget {
+  const Contact({Key? key}) : super(key: key);
+
+  @override
+  State<Contact> createState() => _ContactState();
+}
+
+class _ContactState extends State<Contact> {
   var scaffoldKey = GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,7 +47,7 @@ class contact extends StatelessWidget {
         ),
       ),
       extendBodyBehindAppBar: true,
-      drawer: MainDrawer(),
+      drawer: const MainDrawer(),
       bottomNavigationBar: ContactUsBottomAppBar(
         companyName: 'Eva Devkota',
         textColor: Colors.white,
@@ -53,7 +62,7 @@ class contact extends StatelessWidget {
         child: ContactUs(
             cardColor: Colors.white,
             textColor: Colors.teal.shade900,
-            logo: AssetImage('images/me.jpg'),
+            logo: const AssetImage('images/me.jpg'),
             email: 'evadevkota@gmail.com',
             companyName: '',
             companyColor: Colors.white,

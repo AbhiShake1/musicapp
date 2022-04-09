@@ -33,7 +33,7 @@ class MainDrawer extends StatelessWidget {
           ),
           onTap: () {
             Navigator.push(
-                context, MaterialPageRoute(builder: (context) => HomePage()));
+                context, MaterialPageRoute(builder: (context) => const HomePage()));
           },
         ),
         ListTile(
@@ -69,8 +69,8 @@ class MainDrawer extends StatelessWidget {
             height: 30,
           ),
           onTap: () {
-            Navigator.push(
-                context, MaterialPageRoute(builder: (context) => UI22()));
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const FeedbackPage()));
           },
         ),
         ListTile(
@@ -105,7 +105,7 @@ class MainDrawer extends StatelessWidget {
           onTap: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => contact()),
+              MaterialPageRoute(builder: (context) => const Contact()),
             );
           },
         ),
@@ -132,16 +132,16 @@ class MainDrawer extends StatelessWidget {
   showAlertDialog(BuildContext context) {
     // set up the buttons
     Widget cancelButton = FlatButton(
-      child: Text("Cancel"),
+      child: const Text("Cancel"),
       onPressed: () {},
     );
     Widget continueButton =
-        FlatButton(child: Text("Continue"), onPressed: () {});
+        FlatButton(child: const Text("Continue"), onPressed: () {});
 
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
-      title: Text("AlertDialog"),
-      content: Text("Are you sure you want to logout "),
+      title: const Text("AlertDialog"),
+      content: const Text("Are you sure you want to logout "),
       actions: [
         cancelButton,
         continueButton,

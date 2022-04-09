@@ -5,6 +5,7 @@ class _CurrentUserProvider extends StateNotifier<User?> {
   _CurrentUserProvider() : super(null);
 
   set currentUser(User user) => state = user;
+
   void removeCurrentUser() => state = null;
 }
 

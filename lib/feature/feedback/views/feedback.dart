@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:fyp/core/widgets/main_drawer.dart';
-import 'package:fyp/feature/home/views/home.dart';
 
-class UI22 extends StatefulWidget {
+class FeedbackPage extends StatefulWidget {
+  const FeedbackPage({Key? key}) : super(key: key);
+
   @override
-  _UI22State createState() => _UI22State();
+  _FeedbackPageState createState() => _FeedbackPageState();
 }
 
-class _UI22State extends State<UI22> {
+class _FeedbackPageState extends State<FeedbackPage> {
   List<bool> isTypeSelected = [false, false, false, true, true];
   var scaffoldKey = GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,23 +46,23 @@ class _UI22State extends State<UI22> {
         ),
       ),
       extendBodyBehindAppBar: true,
-      drawer: MainDrawer(),
+      drawer: const MainDrawer(),
       body: Container(
         decoration: const BoxDecoration(
             image: DecorationImage(
                 image: AssetImage('images/img3.jpg'), fit: BoxFit.cover)),
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(
+            const SizedBox(
               height: 130.0,
             ),
-            Text(
+            const Text(
               "Please select the type of the feedback",
               style: TextStyle(color: Colors.white, fontSize: 20),
             ),
-            SizedBox(height: 25.0),
+            const SizedBox(height: 25.0),
             GestureDetector(
               child: buildCheckItem(
                 title: "Login trouble",
@@ -109,11 +111,11 @@ class _UI22State extends State<UI22> {
               },
             ),
             buildFeedbackForm(),
-            Spacer(),
+            const Spacer(),
             Row(
               children: [
                 Container(
-                    padding: EdgeInsets.only(left: 100, bottom: 10),
+                    padding: const EdgeInsets.only(left: 100, bottom: 10),
                     child: RaisedButton(
                       color: Colors.white,
                       shape: RoundedRectangleBorder(
@@ -121,7 +123,7 @@ class _UI22State extends State<UI22> {
                         side: const BorderSide(),
                       ),
                       onPressed: () {},
-                      child: Text(
+                      child: const Text(
                         "SUBMIT",
                         style: TextStyle(
                             color: Colors.black, fontWeight: FontWeight.bold),
@@ -136,7 +138,7 @@ class _UI22State extends State<UI22> {
   }
 
   buildFeedbackForm() {
-    return Container(
+    return SizedBox(
       height: 200,
       child: Stack(
         children: [
@@ -144,16 +146,15 @@ class _UI22State extends State<UI22> {
             decoration: InputDecoration(
                 fillColor: Colors.white60,
                 filled: true,
-                hintStyle: TextStyle(fontSize: 20.0, color: Colors.black),
+                hintStyle: const TextStyle(fontSize: 20.0, color: Colors.black),
                 hintText: "Please briefly describe the issue",
-                border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(20))),
+                border: OutlineInputBorder(borderRadius: BorderRadius.circular(20))),
             maxLines: 10,
           ),
           Align(
             alignment: Alignment.bottomCenter,
             child: Container(
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 border: Border(
                   top: BorderSide(
                     width: 1.0,
@@ -161,15 +162,15 @@ class _UI22State extends State<UI22> {
                   ),
                 ),
               ),
-              padding: EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(8.0),
               child: Row(
                 children: [
                   Container(
                     decoration: BoxDecoration(
-                      color: Color(0xFFE5E5E5),
+                      color: const Color(0xFFE5E5E5),
                       borderRadius: BorderRadius.circular(5.0),
                     ),
-                    child: Padding(
+                    child: const Padding(
                       padding: EdgeInsets.all(8.0),
                       child: Icon(
                         Icons.add,
@@ -177,10 +178,10 @@ class _UI22State extends State<UI22> {
                       ),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 10.0,
                   ),
-                  Text(
+                  const Text(
                     "Upload screenshot (optional)",
                     style: TextStyle(
                       color: Colors.black,
