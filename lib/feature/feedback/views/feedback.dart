@@ -1,19 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:fyp/api/django_api.dart';
+import 'package:fyp/core/providers/current_user_provider.dart';
 import 'package:fyp/core/widgets/main_drawer.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:velocity_x/velocity_x.dart';
 
-class FeedbackPage extends StatefulWidget {
+class FeedbackPage extends StatefulHookConsumerWidget {
   const FeedbackPage({Key? key}) : super(key: key);
 
   @override
   _FeedbackPageState createState() => _FeedbackPageState();
 }
 
-class _FeedbackPageState extends State<FeedbackPage> {
+class _FeedbackPageState extends ConsumerState<FeedbackPage> {
   List<bool> isTypeSelected = [false, false, false, true, true];
   var scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
+    final descriptionController = useTextEditingController();
     return Scaffold(
       key: scaffoldKey,
       appBar: PreferredSize(
@@ -110,7 +116,65 @@ class _FeedbackPageState extends State<FeedbackPage> {
                 });
               },
             ),
-            buildFeedbackForm(),
+            SizedBox(
+              height: 200,
+              child: Stack(
+                children: [
+                  TextField(
+                    controller: descriptionController,
+                    decoration: InputDecoration(
+                        fillColor: Colors.white60,
+                        filled: true,
+                        hintStyle:
+                            const TextStyle(fontSize: 20.0, color: Colors.black),
+                        hintText: "Please briefly describe the issue",
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20))),
+                    maxLines: 10,
+                  ),
+                  Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Container(
+                      decoration: const BoxDecoration(
+                        border: Border(
+                          top: BorderSide(
+                            width: 1.0,
+                            color: Color(0xFFA6A6A6),
+                          ),
+                        ),
+                      ),
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        children: [
+                          Container(
+                            decoration: BoxDecoration(
+                              color: const Color(0xFFE5E5E5),
+                              borderRadius: BorderRadius.circular(5.0),
+                            ),
+                            child: const Padding(
+                              padding: EdgeInsets.all(8.0),
+                              child: Icon(
+                                Icons.add,
+                                color: Colors.black,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 10.0,
+                          ),
+                          const Text(
+                            "Upload screenshot (optional)",
+                            style: TextStyle(
+                              color: Colors.black,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
             const Spacer(),
             Row(
               children: [
@@ -122,7 +186,15 @@ class _FeedbackPageState extends State<FeedbackPage> {
                         borderRadius: BorderRadius.circular(18.0),
                         side: const BorderSide(),
                       ),
-                      onPressed: () {},
+                      onPressed: () async {
+                        final user = ref.watch(currentUserRef);
+                        if (user == null) {
+                          context.showToast(msg: 'Please sign in first');
+                        } else {
+                          await DjangoApi.postFeedback(
+                              user!.userName, 'issues', descriptionController.text);
+                        }
+                      },
                       child: const Text(
                         "SUBMIT",
                         style: TextStyle(
@@ -133,65 +205,6 @@ class _FeedbackPageState extends State<FeedbackPage> {
             )
           ],
         ),
-      ),
-    );
-  }
-
-  buildFeedbackForm() {
-    return SizedBox(
-      height: 200,
-      child: Stack(
-        children: [
-          TextField(
-            decoration: InputDecoration(
-                fillColor: Colors.white60,
-                filled: true,
-                hintStyle: const TextStyle(fontSize: 20.0, color: Colors.black),
-                hintText: "Please briefly describe the issue",
-                border: OutlineInputBorder(borderRadius: BorderRadius.circular(20))),
-            maxLines: 10,
-          ),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: Container(
-              decoration: const BoxDecoration(
-                border: Border(
-                  top: BorderSide(
-                    width: 1.0,
-                    color: Color(0xFFA6A6A6),
-                  ),
-                ),
-              ),
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      color: const Color(0xFFE5E5E5),
-                      borderRadius: BorderRadius.circular(5.0),
-                    ),
-                    child: const Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Icon(
-                        Icons.add,
-                        color: Colors.black,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    width: 10.0,
-                  ),
-                  const Text(
-                    "Upload screenshot (optional)",
-                    style: TextStyle(
-                      color: Colors.black,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          )
-        ],
       ),
     );
   }

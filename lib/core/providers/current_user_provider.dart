@@ -9,4 +9,5 @@ class _CurrentUserProvider extends StateNotifier<User?> {
   void removeCurrentUser() => state = null;
 }
 
-final currentUserRef = Provider<_CurrentUserProvider>((_) => _CurrentUserProvider());
+final currentUserRef = StateNotifierProvider<_CurrentUserProvider, User?>(
+    (_) => _CurrentUserProvider());

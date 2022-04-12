@@ -130,7 +130,8 @@ class LoginPage extends HookWidget {
                                         passwordController.text);
                                 ref.read(loadingRef.notifier).loading = false;
                                 if (userDetails != null) {
-                                  ref.read(currentUserRef).currentUser = userDetails;
+                                  ref.read(currentUserRef.notifier).currentUser =
+                                      userDetails;
                                   Navigator.of(context).pushReplacement(
                                     MaterialPageRoute(
                                       builder: (_) => const BottomNavBar(),

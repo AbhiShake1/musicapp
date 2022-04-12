@@ -1,23 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:fyp/api/django_api.dart';
+import 'package:fyp/core/models/user/user.dart';
+import 'package:fyp/core/providers/current_user_provider.dart';
 import 'package:fyp/core/widgets/main_drawer.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class Profile extends StatefulWidget {
+class Profile extends ConsumerWidget {
   const Profile({Key? key}) : super(key: key);
 
   @override
-  State<Profile> createState() => _ProfileState();
-}
-
-class _ProfileState extends State<Profile> {
-  late String value;
-
-//  _ProfileScreenState(this.value);
-  var scaffoldKey = GlobalKey<ScaffoldState>();
-
-  @override
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    var scaffoldKey = GlobalKey<ScaffoldState>();
+    User? user = ref.watch(currentUserRef);
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         home: Scaffold(
@@ -96,8 +90,8 @@ class _ProfileState extends State<Profile> {
                                             Image.asset('images/user.png',
                                                 color: Colors.black, height: 20),
                                             const SizedBox(width: 30),
-                                            const Text(' First Name',
-                                                style: TextStyle(
+                                            Text(user?.userName ?? '',
+                                                style: const TextStyle(
                                                   fontSize: 18,
                                                 ))
                                           ])),
@@ -109,22 +103,22 @@ class _ProfileState extends State<Profile> {
                                             Image.asset('images/user.png',
                                                 color: Colors.black, height: 20),
                                             const SizedBox(width: 30),
-                                            const Text(' Last Name',
-                                                style: TextStyle(
+                                            Text(user?.userName ?? '',
+                                                style: const TextStyle(
                                                   fontSize: 18,
                                                 ))
                                           ])),
                                       Container(
                                           padding: const EdgeInsets.only(
                                               top: 30, left: 50, bottom: 50),
-                                          child: Row(children: const [
-                                            Icon(
+                                          child: Row(children: [
+                                            const Icon(
                                               Icons.email,
                                               size: 20,
                                             ),
-                                            SizedBox(width: 30),
-                                            Text('Email',
-                                                style: TextStyle(
+                                            const SizedBox(width: 30),
+                                            Text(user?.email ?? '',
+                                                style: const TextStyle(
                                                   fontSize: 18,
                                                 ))
                                           ])),
@@ -172,6 +166,9 @@ class _ProfileState extends State<Profile> {
         child: const Text("Continue"),
         onPressed: () async {
           await DjangoApi.signout();
+          ProviderScope.containerOf(context)
+              .read(currentUserRef.notifier)
+              .removeCurrentUser();
         });
 
     // set up the AlertDialog

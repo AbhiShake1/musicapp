@@ -19,7 +19,7 @@ class DjangoApi {
         "lastName": lastName ?? '',
       }),
     );
-    if (response.statusCode != 200) return null;
+    if (response.statusCode >= 400) return null;
     final body = response.body;
     final Map<String, dynamic> result = jsonDecode(body);
     return User.fromJson(result);
@@ -35,7 +35,7 @@ class DjangoApi {
         "password": password,
       }),
     );
-    if (response.statusCode != 200) return null;
+    if (response.statusCode >= 400) return null;
     final body = response.body;
     final Map<String, dynamic> result = jsonDecode(body);
     return User.fromJson(result);
@@ -49,7 +49,7 @@ class DjangoApi {
         "new_password": newPassword,
       }),
     );
-    if (response.statusCode != 200) return null;
+    if (response.statusCode >= 400) return null;
     final body = response.body;
     final Map<String, dynamic> result = jsonDecode(body);
     return User.fromJson(result);
@@ -58,7 +58,7 @@ class DjangoApi {
   static Future<String?> signout() async {
     final response =
         await get(Uri.parse('https://fyp-music-app-eva.herokuapp.com/api=signout/'));
-    if (response.statusCode != 200) return null;
+    if (response.statusCode >= 400) return null;
     return 'Successful';
   }
 
@@ -69,6 +69,21 @@ class DjangoApi {
     final List<Map<String, dynamic>?>? result =
         json.decode(response.body)['results'];
     return result?.where((element) => element?['id'] == 3).toList();
+  }
+
+  static Future<String?> postFeedback(
+      String userId, String issues, String description) async {
+    final response = await post(
+      Uri.parse('https://fyp-music-app-eva.herokuapp.com/api=feedback/'),
+      body: jsonEncode({
+        "username": userId,
+        "issues": issues,
+        "description": description,
+      }),
+    );
+    if (response.statusCode >= 400) return null;
+    final body = response.body;
+    return body;
   }
 
   static Future<List<Map<String, dynamic>?>?> getNotifications() async {
@@ -90,7 +105,7 @@ class DjangoApi {
         contentType: MediaType('audio', 'mpeg')));
 
     final response = await request.send();
-    if (response.statusCode != 200) return null;
+    if (response.statusCode >= 400) return null;
     return 'Successful';
   }
 
@@ -101,7 +116,7 @@ class DjangoApi {
       Uri.parse('https://fyp-music-app-eva.herokuapp.com/api=music_upload/get/'),
     );
 
-    if (response.statusCode != 200) return null;
+    if (response.statusCode >= 400) return null;
     return jsonDecode(response.body);
   }
 
@@ -113,7 +128,7 @@ class DjangoApi {
             'https://fyp-music-app-eva.herokuapp.com/api=music_upload/delete/'),
         body: jsonEncode({'file_name': musicName}));
 
-    if (response.statusCode != 200) return null;
+    if (response.statusCode >= 400) return null;
     return jsonDecode(response.body);
   }
 }
