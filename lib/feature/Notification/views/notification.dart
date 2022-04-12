@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fyp/core/widgets/main_drawer.dart';
+import 'package:fyp/feature/Notification/providers/notification_provider.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class Notify extends StatefulWidget {
   const Notify({Key? key}) : super(key: key);
@@ -10,6 +12,7 @@ class Notify extends StatefulWidget {
 
 class _NotifyState extends State<Notify> {
   var scaffoldKey = GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,6 +44,19 @@ class _NotifyState extends State<Notify> {
           ),
         ),
         drawer: const MainDrawer(),
-        body: SingleChildScrollView(child: Column(children: const [])));
+        body: SingleChildScrollView(
+            child: Consumer(
+          builder: (context, ref, child) => Column(
+            children: ref.watch(notificationRef).maybeWhen(
+                orElse: () => [],
+                data: (data) =>
+                    data
+                        ?.map((e) => Row(
+                              children: [Text(e!['title']), Text(e['description'])],
+                            ))
+                        .toList() ??
+                    []),
+          ),
+        )));
   }
 }
