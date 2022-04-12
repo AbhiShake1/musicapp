@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fyp/api/django_api.dart';
 import 'package:fyp/core/widgets/main_drawer.dart';
 
 class Profile extends StatefulWidget {
@@ -167,8 +168,11 @@ class _ProfileState extends State<Profile> {
       child: const Text("Cancel"),
       onPressed: () {},
     );
-    Widget continueButton =
-        FlatButton(child: const Text("Continue"), onPressed: () {});
+    Widget continueButton = FlatButton(
+        child: const Text("Continue"),
+        onPressed: () async {
+          await DjangoApi.signout();
+        });
 
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
