@@ -71,6 +71,14 @@ class DjangoApi {
     return result?.where((element) => element?['id'] == 3).toList();
   }
 
+  static Future<Map<String, dynamic>?> getNotifications() async {
+    final response = await get(
+        Uri.parse('https://fyp-music-app-eva.herokuapp.com/api=notifications/get/'));
+    if (response.statusCode == 401) return null;
+    final Map<String, dynamic>? result = json.decode(response.body)['results'];
+    return result;
+  }
+
   static Future<String?> uploadMusic(
     File musicFile,
   ) async {
