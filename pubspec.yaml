@@ -42,7 +42,6 @@ dependencies:
   http: ^0.13.4
   velocity_x: ^3.4.0
   json_annotation: ^4.4.0
-  locally: ^1.0.5
   syncfusion_flutter_pdfviewer: ^19.1.69-beta
   glassmorphism: ^3.0.0
   contactus: ^1.2.0
