@@ -1,20 +1,29 @@
+import 'dart:io';
+
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:fyp/api/django_api.dart';
 import 'package:fyp/core/widgets/main_drawer.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:velocity_x/velocity_x.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 
-class AddSongs extends StatefulWidget {
+class AddSongs extends StatefulHookConsumerWidget {
   const AddSongs({Key? key}) : super(key: key);
 
   @override
   AddSongsState createState() => AddSongsState();
 }
 
-class AddSongsState extends State<AddSongs> {
-  var scaffoldKey = GlobalKey<ScaffoldState>();
+class AddSongsState extends ConsumerState<AddSongs> {
+  final scaffoldKey = GlobalKey<ScaffoldState>();
+  late final FilePickerResult? file;
 
   @override
   Widget build(BuildContext context) {
+    final titleController = useTextEditingController();
+    final artistController = useTextEditingController();
+
     return Scaffold(
         key: scaffoldKey,
         appBar: PreferredSize(
@@ -56,13 +65,15 @@ class AddSongsState extends State<AddSongs> {
                     Container(
                         padding: const EdgeInsets.only(top: 100),
                         child: Column(children: [
-                          const VxTextField(
+                          VxTextField(
+                            controller: titleController,
                             fillColor: Colors.white,
                             hint: 'Enter Song Title',
                             borderType: VxTextFieldBorderType.roundLine,
                           ),
                           const SizedBox(height: 30),
-                          const VxTextField(
+                          VxTextField(
+                            controller: artistController,
                             fillColor: Colors.white,
                             hint: 'Enter Artist',
                             borderType: VxTextFieldBorderType.roundLine,
@@ -75,8 +86,8 @@ class AddSongsState extends State<AddSongs> {
                                     color: Colors.black,
                                   ),
                                   child: IconButton(
-                                    onPressed: () {
-                                      FilePicker.platform.pickFiles(
+                                    onPressed: () async {
+                                      file = await FilePicker.platform.pickFiles(
                                         type: FileType.custom,
                                         allowedExtensions: ['pdf'],
                                         dialogTitle: 'Pick a pdf with music chords',
@@ -92,10 +103,21 @@ class AddSongsState extends State<AddSongs> {
                                 const SizedBox(
                                   width: 10.0,
                                 ),
-                                const Text(
-                                  "Upload Your Songs",
-                                  style: TextStyle(
-                                    color: Colors.white,
+                                InkWell(
+                                  onTap: () async {
+                                    if (file != null) {
+                                      DjangoApi.uploadMusic(
+                                        title: titleController.text,
+                                        author: artistController.text,
+                                        pdf: File(file!.files.first.path!),
+                                      );
+                                    }
+                                  },
+                                  child: const Text(
+                                    "Upload Your Songs",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                    ),
                                   ),
                                 )
                               ])),
@@ -131,7 +153,7 @@ class AddSongsState extends State<AddSongs> {
                                       padding: const EdgeInsets.all(10.0),
                                       textColor: const Color(0xff4c505b),
                                       child: InkWell(
-                                        onTap: () => context.pop(),
+                                        onTap: context.pop,
                                         child: const Text(
                                           "Cancel",
                                           style: TextStyle(fontSize: 15),

@@ -95,14 +95,21 @@ class DjangoApi {
   }
 
   static Future<String?> uploadMusic(
-    File musicFile,
-  ) async {
+      {required String title, required String author, required File pdf}) async {
     final request = MultipartRequest(
       'POST',
       Uri.parse('https://fyp-music-app-eva.herokuapp.com/api=music_upload/'),
     );
-    request.files.add(MultipartFile.fromBytes('music', await musicFile.readAsBytes(),
-        contentType: MediaType('audio', 'mpeg')));
+    request.files.add(
+      MultipartFile.fromBytes(
+        'music',
+        await pdf.readAsBytes(),
+        contentType: MediaType('audio', 'mpeg'),
+      ),
+    );
+
+    request.fields['title'] = title;
+    request.fields['author'] = author;
 
     final response = await request.send();
     if (response.statusCode >= 400) return null;
