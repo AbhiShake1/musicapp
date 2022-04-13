@@ -130,8 +130,13 @@ class AddSongsState extends State<AddSongs> {
                                       onPressed: () async {},
                                       padding: const EdgeInsets.all(10.0),
                                       textColor: const Color(0xff4c505b),
-                                      child: const Text("Cancel",
-                                          style: TextStyle(fontSize: 15)),
+                                      child: InkWell(
+                                        onTap: () => context.pop(),
+                                        child: const Text(
+                                          "Cancel",
+                                          style: TextStyle(fontSize: 15),
+                                        ),
+                                      ),
                                     ),
                                   ]))
                         ]))
