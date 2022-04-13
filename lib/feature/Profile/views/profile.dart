@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fyp/api/django_api.dart';
+import 'package:fyp/core/extensions/context_extensions.dart';
 import 'package:fyp/core/models/user/user.dart';
 import 'package:fyp/core/providers/current_user_provider.dart';
 import 'package:fyp/core/widgets/main_drawer.dart';
@@ -13,50 +14,54 @@ class Profile extends ConsumerWidget {
     var scaffoldKey = GlobalKey<ScaffoldState>();
     User? user = ref.watch(currentUserRef);
     return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: Scaffold(
-            key: scaffoldKey,
-            appBar: PreferredSize(
-              preferredSize: const Size.fromHeight(80),
-              child: AppBar(
-                leading: IconButton(
-                    padding: const EdgeInsets.fromLTRB(10, 20, 0, 0),
-                    icon: Image.asset(
-                      'images/menu.png',
-                      height: 20,
-                      color: Colors.black,
-                    ),
-                    onPressed: () {
-                      scaffoldKey.currentState?.openDrawer();
-                    }),
-                backgroundColor: Colors.white,
-                actions: const [
-                  Padding(
-                      padding: EdgeInsets.fromLTRB(0, 25, 150, 0),
-                      child: Text(
-                        'Profile',
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontFamily: "SanFranciscos",
-                            fontSize: 20,
-                            decorationColor: Colors.white,
-                            fontWeight: FontWeight.bold),
-                      )),
-                ],
-              ),
-            ),
-            extendBodyBehindAppBar: true,
-            drawer: const MainDrawer(),
-            body: Container(
-                decoration: const BoxDecoration(
-                    image: DecorationImage(
-                        image: AssetImage('images/img3.jpg'), fit: BoxFit.cover)),
-                child: Stack(children: [
-                  Column(children: [
-                    Column(children: [
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        key: scaffoldKey,
+        appBar: PreferredSize(
+          preferredSize: const Size.fromHeight(80),
+          child: AppBar(
+            leading: IconButton(
+                padding: const EdgeInsets.fromLTRB(10, 20, 0, 0),
+                icon: Image.asset(
+                  'images/menu.png',
+                  height: 20,
+                  color: Colors.black,
+                ),
+                onPressed: () {
+                  scaffoldKey.currentState?.openDrawer();
+                }),
+            backgroundColor: Colors.white,
+            actions: const [
+              Padding(
+                  padding: EdgeInsets.fromLTRB(0, 25, 150, 0),
+                  child: Text(
+                    'Profile',
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontFamily: "SanFranciscos",
+                        fontSize: 20,
+                        decorationColor: Colors.white,
+                        fontWeight: FontWeight.bold),
+                  )),
+            ],
+          ),
+        ),
+        extendBodyBehindAppBar: true,
+        drawer: const MainDrawer(),
+        body: Container(
+          decoration: const BoxDecoration(
+              image: DecorationImage(
+                  image: AssetImage('images/img3.jpg'), fit: BoxFit.cover)),
+          child: Stack(
+            children: [
+              Column(
+                children: [
+                  Column(
+                    children: [
                       Container(
-                          padding: const EdgeInsets.fromLTRB(0, 150, 0, 0),
-                          child: Stack(children: [
+                        padding: const EdgeInsets.fromLTRB(0, 150, 0, 0),
+                        child: Stack(
+                          children: [
                             Container(
                                 padding: const EdgeInsets.fromLTRB(10, 50, 10, 0),
                                 margin: const EdgeInsets.fromLTRB(25, 50, 10, 0),
@@ -134,26 +139,37 @@ class Profile extends ConsumerWidget {
                                         radius: 100,
                                         backgroundImage:
                                             AssetImage('images/user.png'))))
-                          ])),
+                          ],
+                        ),
+                      ),
                       Padding(
-                          padding: const EdgeInsets.fromLTRB(80, 20, 10, 5),
-                          child: FlatButton(
-                            minWidth: 150,
-                            height: 50,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(70)),
-                            color: Colors.black,
-                            onPressed: () {
-                              showAlertDialog(context);
-                            },
-                            child: const Text("LogOut",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                )),
-                          )),
-                    ])
-                  ])
-                ]))));
+                        padding: const EdgeInsets.fromLTRB(80, 20, 10, 5),
+                        child: FlatButton(
+                          minWidth: 150,
+                          height: 50,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(70)),
+                          color: Colors.black,
+                          onPressed: () {
+                            showAlertDialog(context);
+                          },
+                          child: const Text(
+                            "LogOut",
+                            style: TextStyle(
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  )
+                ],
+              )
+            ],
+          ),
+        ),
+      ),
+    );
   }
 
   showAlertDialog(BuildContext context) {
@@ -166,9 +182,7 @@ class Profile extends ConsumerWidget {
         child: const Text("Continue"),
         onPressed: () async {
           await DjangoApi.signout();
-          ProviderScope.containerOf(context)
-              .read(currentUserRef.notifier)
-              .removeCurrentUser();
+          context.read(currentUserRef.notifier).removeCurrentUser();
         });
 
     // set up the AlertDialog

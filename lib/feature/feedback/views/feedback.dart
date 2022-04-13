@@ -192,7 +192,7 @@ class _FeedbackPageState extends ConsumerState<FeedbackPage> {
                           context.showToast(msg: 'Please sign in first');
                         } else {
                           await DjangoApi.postFeedback(
-                              user!.userName, 'issues', descriptionController.text);
+                              user.userName, 'issues', descriptionController.text);
                         }
                       },
                       child: const Text(

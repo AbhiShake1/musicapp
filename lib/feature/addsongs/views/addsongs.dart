@@ -1,3 +1,4 @@
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:fyp/core/widgets/main_drawer.dart';
 import 'package:velocity_x/velocity_x.dart';
@@ -73,10 +74,19 @@ class AddSongsState extends State<AddSongs> {
                                   decoration: const BoxDecoration(
                                     color: Colors.black,
                                   ),
-                                  child: const Icon(
-                                    Icons.add,
-                                    color: Colors.white,
-                                    size: 30,
+                                  child: IconButton(
+                                    onPressed: () {
+                                      FilePicker.platform.pickFiles(
+                                        type: FileType.custom,
+                                        allowedExtensions: ['pdf'],
+                                        dialogTitle: 'Pick a pdf with music chords',
+                                      );
+                                    },
+                                    icon: const Icon(
+                                      Icons.add,
+                                      color: Colors.white,
+                                      size: 30,
+                                    ),
                                   ),
                                 ),
                                 const SizedBox(
