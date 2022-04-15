@@ -116,6 +116,12 @@ class DjangoApi {
     return 'Successful';
   }
 
+  static Future<void> requestMusic(
+      {required String artist, required String songName}) async {
+    await post(
+        Uri.parse('https://fyp-music-app-eva.herokuapp.com/api=request_music/'));
+  }
+
   static Future<List<String>?> getMusics(
     File musicFile,
   ) async {

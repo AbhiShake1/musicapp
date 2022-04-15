@@ -111,6 +111,9 @@ class AddSongsState extends ConsumerState<AddSongs> {
                                         author: artistController.text,
                                         pdf: File(file!.files.first.path!),
                                       );
+                                    } else {
+                                      context.showToast(
+                                          msg: 'Please provide a file');
                                     }
                                   },
                                   child: const Text(

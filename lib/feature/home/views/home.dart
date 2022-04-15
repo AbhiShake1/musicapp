@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:fyp/api/django_api.dart';
 import 'package:fyp/core/widgets/main_drawer.dart';
 import 'package:fyp/feature/Karaoke/karaoke.dart';
 import 'package:fyp/feature/Mysongs/views/Mysongs.dart';
@@ -8,6 +9,7 @@ import 'package:fyp/feature/aboutus/view/aboutus.dart';
 import 'package:fyp/feature/addsongs/views/addsongs.dart';
 import 'package:fyp/feature/artist/views/artist.dart';
 import 'package:velocity_x/velocity_x.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 
 final List<String> imgList = [
   "https://www.businesscoot.com/uploads/study_main_image/227.webp",
@@ -167,8 +169,7 @@ class _HomePageState extends State<HomePage> {
                               onPressed: () {
                                 showDialog(
                                   context: context,
-                                  builder: (BuildContext context) =>
-                                      _buildPopupDialog(context),
+                                  builder: (_) => const CustomAlertDialog(),
                                 );
                               },
                               child: Container(
@@ -312,8 +313,17 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
+}
 
-  Widget _buildPopupDialog(BuildContext context) {
+class CustomAlertDialog extends HookWidget {
+  const CustomAlertDialog({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final artistController = useTextEditingController();
+    final songController = useTextEditingController();
     return AlertDialog(
       backgroundColor: Colors.black,
       title: const Text(
@@ -323,14 +333,16 @@ class _HomePageState extends State<HomePage> {
       content: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: const <Widget>[
+        children: [
           VxTextField(
+            controller: artistController,
             fillColor: Colors.white,
             hint: 'Enter Artist Name',
             borderType: VxTextFieldBorderType.roundLine,
           ),
-          SizedBox(height: 30),
+          const SizedBox(height: 30),
           VxTextField(
+            controller: songController,
             fillColor: Colors.white,
             hint: 'Enter Song Name',
             borderType: VxTextFieldBorderType.roundLine,
@@ -339,12 +351,20 @@ class _HomePageState extends State<HomePage> {
       ),
       actions: <Widget>[
         FlatButton(
-          onPressed: () {},
+          onPressed: context.pop,
           textColor: Colors.white,
           child: const Text('Cancel'),
         ),
         FlatButton(
-          onPressed: () {},
+          onPressed: () => DjangoApi.requestMusic(
+                  artist: artistController.text, songName: songController.text)
+              .whenComplete(
+            () => context.showToast(
+              msg: 'The song has been requested',
+              position: VxToastPosition.top,
+              showTime: 1000,
+            ),
+          ),
           textColor: Colors.white,
           child: const Text('Request'),
         ),
