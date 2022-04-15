@@ -17,7 +17,7 @@ class AddSongs extends StatefulHookConsumerWidget {
 
 class AddSongsState extends ConsumerState<AddSongs> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
-  late final FilePickerResult? file;
+  FilePickerResult? file;
 
   @override
   Widget build(BuildContext context) {
