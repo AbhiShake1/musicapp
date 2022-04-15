@@ -86,11 +86,11 @@ class DjangoApi {
     return body;
   }
 
-  static Future<List<Map<String, dynamic>?>?> getNotifications() async {
+  static Future<List?> getNotifications() async {
     final response = await get(
         Uri.parse('https://fyp-music-app-eva.herokuapp.com/api=notifications/get/'));
     if (response.statusCode == 401) return null;
-    final List<Map<String, dynamic>?>? result = json.decode(response.body);
+    final List? result = json.decode(response.body);
     return result;
   }
 

@@ -48,12 +48,14 @@ class _NotifyState extends State<Notify> {
             child: Consumer(
           builder: (context, ref, child) => Column(
             children: ref.watch(notificationRef).maybeWhen(
-                orElse: () => [],
+                orElse: () => [const Center(child: CircularProgressIndicator())],
                 data: (data) =>
                     data
-                        ?.map((e) => Row(
-                              children: [Text(e!['title']), Text(e['description'])],
-                            ))
+                        ?.map(
+                          (e) => Row(
+                            children: [Text(e!['title']), Text(e['description'])],
+                          ),
+                        )
                         .toList() ??
                     []),
           ),
