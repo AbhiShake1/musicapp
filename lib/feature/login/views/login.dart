@@ -7,6 +7,7 @@ import 'package:fyp/feature/signup/views/signup_page.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:velocity_x/velocity_x.dart';
 
+import '../../../core/preferences.dart';
 import '../../../core/providers/loading_provider.dart';
 
 class LoginPage extends HookWidget {
@@ -133,6 +134,14 @@ class LoginPage extends HookWidget {
                                 if (userDetails != null) {
                                   ref.read(currentUserRef.notifier).currentUser =
                                       userDetails;
+                                  await Preferences.setString(
+                                      'uid_key', userDetails.userName);
+                                  await Preferences.setString(
+                                      'email_key', userDetails.email);
+                                  await Preferences.setString(
+                                      'first_name_key', userDetails.firstName ?? '');
+                                  await Preferences.setString(
+                                      'last_name_key', userDetails.lastName ?? '');
                                   Navigator.of(context).pushReplacement(
                                     MaterialPageRoute(
                                       builder: (_) => const BottomNavBar(),

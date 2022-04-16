@@ -15,6 +15,8 @@ class DjangoApi {
         "username": email,
         "email": email,
         "password": password,
+        "firstName": firstName,
+        "lastName": lastName
       }),
     );
     if (response.statusCode >= 400) return null;

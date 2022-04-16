@@ -49,6 +49,7 @@ dependencies:
   dots_indicator: ^2.1.0
   provider: ^6.0.2
   file_picker: ^4.5.1
+  shared_preferences: ^2.0.13
 
   
 

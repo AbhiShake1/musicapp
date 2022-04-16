@@ -1,8 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:fyp/feature/home/views/home.dart';
 import 'package:fyp/feature/login/views/login.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-void main() {
+import 'core/preferences.dart';
+
+late final String? uid;
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  uid = await Preferences.getString('uid_key');
   runApp(const ProviderScope(child: MyApp()));
 }
 
@@ -18,6 +25,6 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: const LoginPage());
+        home: uid == null ? const LoginPage() : const HomePage());
   }
 }

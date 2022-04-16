@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fyp/core/extensions/context_extensions.dart';
+import 'package:fyp/core/preferences.dart';
 import 'package:fyp/feature/Notification/views/notification.dart';
 import 'package:fyp/feature/Profile/views/profile.dart';
 import 'package:fyp/feature/aboutus/view/aboutus.dart';
@@ -147,6 +148,7 @@ class MainDrawer extends StatelessWidget {
           context.read(currentUserRef.notifier).removeCurrentUser();
           context.pushReplacement(const LoginPage());
           await DjangoApi.signout();
+          await Preferences.clear();
         });
 
     // set up the AlertDialog

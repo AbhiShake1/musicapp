@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:fyp/api/django_api.dart';
 import 'package:fyp/core/extensions/context_extensions.dart';
-import 'package:fyp/core/models/user/user.dart';
+import 'package:fyp/core/extensions/extensions.dart';
 import 'package:fyp/core/providers/current_user_provider.dart';
 import 'package:fyp/core/widgets/main_drawer.dart';
 import 'package:fyp/feature/login/views/login.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:fyp/core/extensions/extensions.dart';
 import 'package:velocity_x/velocity_x.dart';
+
+import '../../../core/preferences.dart';
+
+final valRef = FutureProvider.family((_, String key) => Preferences.getString(key));
 
 class Profile extends ConsumerWidget {
   const Profile({Key? key}) : super(key: key);
@@ -15,7 +18,10 @@ class Profile extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     var scaffoldKey = GlobalKey<ScaffoldState>();
-    User? user = ref.watch(currentUserRef);
+    String? uid = ref.watch(valRef('uid_key')).whenOrNull(data: (d) => d);
+    String? firstName =
+        ref.watch(valRef('first_name_key')).whenOrNull(data: (d) => d);
+    String? lastName = ref.watch(valRef('last_name_key')).whenOrNull(data: (d) => d);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
@@ -98,7 +104,7 @@ class Profile extends ConsumerWidget {
                                             Image.asset('images/user.png',
                                                 color: Colors.black, height: 20),
                                             const SizedBox(width: 30),
-                                            Text(user?.userName ?? '',
+                                            Text(uid ?? '',
                                                 style: const TextStyle(
                                                   fontSize: 18,
                                                 ))
@@ -111,7 +117,7 @@ class Profile extends ConsumerWidget {
                                             Image.asset('images/user.png',
                                                 color: Colors.black, height: 20),
                                             const SizedBox(width: 30),
-                                            Text(user?.userName ?? '',
+                                            Text(firstName ?? '',
                                                 style: const TextStyle(
                                                   fontSize: 18,
                                                 ))
@@ -125,7 +131,7 @@ class Profile extends ConsumerWidget {
                                               size: 20,
                                             ),
                                             const SizedBox(width: 30),
-                                            Text(user?.email ?? '',
+                                            Text(lastName ?? '',
                                                 style: const TextStyle(
                                                   fontSize: 18,
                                                 ))
