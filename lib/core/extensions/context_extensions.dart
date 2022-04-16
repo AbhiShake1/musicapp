@@ -8,4 +8,10 @@ extension ContextX on BuildContext {
   ) {
     return ProviderScope.containerOf(this).read(provider);
   }
+
+  void pushReplacement(Widget page) {
+    Navigator.of(this).pushReplacement(MaterialPageRoute(
+      builder: (context) => page,
+    ));
+  }
 }

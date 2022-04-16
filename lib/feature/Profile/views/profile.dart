@@ -4,7 +4,10 @@ import 'package:fyp/core/extensions/context_extensions.dart';
 import 'package:fyp/core/models/user/user.dart';
 import 'package:fyp/core/providers/current_user_provider.dart';
 import 'package:fyp/core/widgets/main_drawer.dart';
+import 'package:fyp/feature/login/views/login.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:fyp/core/extensions/extensions.dart';
+import 'package:velocity_x/velocity_x.dart';
 
 class Profile extends ConsumerWidget {
   const Profile({Key? key}) : super(key: key);
@@ -176,13 +179,14 @@ class Profile extends ConsumerWidget {
     // set up the buttons
     Widget cancelButton = FlatButton(
       child: const Text("Cancel"),
-      onPressed: () {},
+      onPressed: context.pop,
     );
     Widget continueButton = FlatButton(
         child: const Text("Continue"),
         onPressed: () async {
           await DjangoApi.signout();
           context.read(currentUserRef.notifier).removeCurrentUser();
+          context.pushReplacement(const LoginPage());
         });
 
     // set up the AlertDialog

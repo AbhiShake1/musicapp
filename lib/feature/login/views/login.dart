@@ -3,6 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:fyp/api/django_api.dart';
 import 'package:fyp/core/providers/current_user_provider.dart';
 import 'package:fyp/core/widgets/bottom_nav_bar/views/bottom_nav_bar.dart';
+import 'package:fyp/feature/signup/views/signup_page.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:velocity_x/velocity_x.dart';
 
@@ -11,8 +12,8 @@ import '../../../core/providers/loading_provider.dart';
 class LoginPage extends HookWidget {
   const LoginPage({Key? key}) : super(key: key);
 
-  static const _emailKey = GlobalObjectKey<FormState>(0);
-  static const _passwordKey = GlobalObjectKey<FormState>(1);
+  static const _emailKey = GlobalObjectKey<FormState>('login_email');
+  static const _passwordKey = GlobalObjectKey<FormState>('login_password');
 
   @override
   Widget build(BuildContext context) {
@@ -158,15 +159,20 @@ class LoginPage extends HookWidget {
                   ),
                   Row(
                     children: [
-                      Container(
-                        padding: const EdgeInsets.fromLTRB(60, 0, 30, 10),
-                        child: const Text(
-                          'Have no account, Sign up',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 17,
-                              fontWeight: FontWeight.bold),
+                      InkWell(
+                        child: Container(
+                          padding: const EdgeInsets.fromLTRB(60, 0, 30, 10),
+                          child: const Text(
+                            'Have no account, Sign up',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 17,
+                                fontWeight: FontWeight.bold),
+                          ),
                         ),
+                        onTap: () {
+                          context.push((context) => const SignupPage());
+                        },
                       ),
                     ],
                   ),

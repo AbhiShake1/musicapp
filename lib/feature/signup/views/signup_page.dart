@@ -9,9 +9,9 @@ import '../../../core/providers/loading_provider.dart';
 class SignupPage extends HookWidget {
   const SignupPage({Key? key}) : super(key: key);
 
-  static const _emailKey = GlobalObjectKey<FormState>(0);
-  static const _passwordKey = GlobalObjectKey<FormState>(1);
-  static const _confirmPasswordKey = GlobalObjectKey<FormState>(2);
+  static const _emailKey = GlobalObjectKey<FormState>('signup_email');
+  static const _passwordKey = GlobalObjectKey<FormState>('signup_password');
+  static const _confirmPasswordKey = GlobalObjectKey<FormState>('signup_cpassword');
 
   @override
   Widget build(BuildContext context) {
@@ -105,7 +105,6 @@ class SignupPage extends HookWidget {
                     key: _passwordKey,
                     child: VxTextField(
                       controller: passwordController,
-                      autovalidateMode: AutovalidateMode.onUserInteraction,
                       validator: (v) {
                         v ??= '';
                         return v.length > 6
@@ -186,9 +185,11 @@ class SignupPage extends HookWidget {
                                   _confirmPasswordKey.currentState!.validate()) {
                                 ref.read(loadingRef.notifier).loading = true;
                                 final userDetails = await DjangoApi.createUser(
-                                    emailController.text, passwordController.text,
-                                    firstName: firstNameController.text,
-                                    lastName: lastNameController.text);
+                                  emailController.text,
+                                  passwordController.text,
+                                  firstName: firstNameController.text,
+                                  lastName: lastNameController.text,
+                                );
                                 ref.read(loadingRef.notifier).loading = false;
                                 context.showToast(
                                   msg: userDetails != null

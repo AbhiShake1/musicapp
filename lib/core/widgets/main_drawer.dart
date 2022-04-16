@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:fyp/core/extensions/context_extensions.dart';
 import 'package:fyp/feature/Notification/views/notification.dart';
 import 'package:fyp/feature/Profile/views/profile.dart';
 import 'package:fyp/feature/aboutus/view/aboutus.dart';
 import 'package:fyp/feature/feedback/views/feedback.dart';
 import 'package:fyp/feature/home/views/home.dart';
+import 'package:velocity_x/velocity_x.dart';
+
+import '../../api/django_api.dart';
+import '../../feature/login/views/login.dart';
+import '../providers/current_user_provider.dart';
 
 class MainDrawer extends StatelessWidget {
   const MainDrawer({Key? key}) : super(key: key);
@@ -133,15 +139,20 @@ class MainDrawer extends StatelessWidget {
     // set up the buttons
     Widget cancelButton = FlatButton(
       child: const Text("Cancel"),
-      onPressed: () {},
+      onPressed: context.pop,
     );
-    Widget continueButton =
-        FlatButton(child: const Text("Continue"), onPressed: () {});
+    Widget continueButton = FlatButton(
+        child: const Text("Continue"),
+        onPressed: () async {
+          context.read(currentUserRef.notifier).removeCurrentUser();
+          context.pushReplacement(const LoginPage());
+          await DjangoApi.signout();
+        });
 
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
       title: const Text("AlertDialog"),
-      content: const Text("Are you sure you want to logout "),
+      content: const Text("Are you sure you want to logout?"),
       actions: [
         cancelButton,
         continueButton,
