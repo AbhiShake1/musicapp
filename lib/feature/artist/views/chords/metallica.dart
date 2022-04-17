@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:fyp/core/widgets/main_drawer.dart';
 
 class Metallica extends StatefulWidget {
+  const Metallica({Key? key}) : super(key: key);
+
   @override
   MetallicaState createState() => MetallicaState();
 }
@@ -27,8 +29,8 @@ class MetallicaState extends State<Metallica> {
                 }),
             backgroundColor: Colors.white,
             actions: <Widget>[
-              Padding(
-                padding: const EdgeInsets.fromLTRB(0, 30, 40, 0),
+              const Padding(
+                padding: EdgeInsets.fromLTRB(0, 30, 40, 0),
                 child: Text("Metallica",
                     style: TextStyle(
                       fontSize: 20,
@@ -39,10 +41,10 @@ class MetallicaState extends State<Metallica> {
                   padding: const EdgeInsets.fromLTRB(0, 10, 20, 0),
                   child: FlatButton(
                     shape: RoundedRectangleBorder(
-                        borderRadius: new BorderRadius.circular(30)),
+                        borderRadius: BorderRadius.circular(30)),
                     color: Colors.black,
                     onPressed: () {},
-                    child: Text("+",
+                    child: const Text("+",
                         style: TextStyle(
                           fontSize: 20,
                           color: Colors.white,
@@ -51,7 +53,7 @@ class MetallicaState extends State<Metallica> {
             ],
           ),
         ),
-        drawer: MainDrawer(),
+        drawer: const MainDrawer(),
         body: SingleChildScrollView(
             child: Column(children: [
           Container(
@@ -67,9 +69,9 @@ class MetallicaState extends State<Metallica> {
                           padding: const EdgeInsets.symmetric(vertical: 1.0),
                           alignment: Alignment.center,
                           child: Container(
-                            height: 100,
-                            width: 100,
-                            decoration: BoxDecoration(
+                            height: 300,
+                            width: 500,
+                            decoration: const BoxDecoration(
                               image: DecorationImage(
                                 image: AssetImage(
                                   'images/metallica1.jpeg',
@@ -83,7 +85,7 @@ class MetallicaState extends State<Metallica> {
                     style: TextStyle(fontSize: 15),
                   ),
                 ),
-                Divider(
+                const Divider(
                   thickness: 1,
                   color: Colors.black,
                 ),

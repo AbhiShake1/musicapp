@@ -4,20 +4,15 @@ import 'package:fyp/feature/artist/addpage.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
 class EXO extends StatefulWidget {
+  const EXO({Key? key}) : super(key: key);
+
   @override
   EXOState createState() => EXOState();
 }
 
 class EXOState extends State<EXO> {
-  late PdfViewerController _pdfViewerController;
-  final GlobalKey<SfPdfViewerState> _pdfViewerStateKey = GlobalKey();
-  @override
-  void initState() {
-    _pdfViewerController = PdfViewerController();
-    super.initState();
-  }
-
   var scaffoldKey = GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,9 +31,9 @@ class EXOState extends State<EXO> {
                   scaffoldKey.currentState?.openDrawer();
                 }),
             backgroundColor: Colors.white,
-            actions: <Widget>[
-              Padding(
-                padding: const EdgeInsets.fromLTRB(0, 30, 40, 0),
+            actions: [
+              const Padding(
+                padding: EdgeInsets.fromLTRB(0, 30, 40, 0),
                 child: Text("Lyrics and chords",
                     style: TextStyle(
                       fontSize: 20,
@@ -49,15 +44,15 @@ class EXOState extends State<EXO> {
                   padding: const EdgeInsets.fromLTRB(0, 10, 20, 0),
                   child: FlatButton(
                     shape: RoundedRectangleBorder(
-                        borderRadius: new BorderRadius.circular(30)),
+                        borderRadius: BorderRadius.circular(30)),
                     color: Colors.black,
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => Addpdf()),
+                        MaterialPageRoute(builder: (context) => const Addpdf()),
                       );
                     },
-                    child: Text("+",
+                    child: const Text("+",
                         style: TextStyle(
                           fontSize: 20,
                           color: Colors.white,
@@ -66,42 +61,31 @@ class EXOState extends State<EXO> {
             ],
           ),
         ),
-        drawer: MainDrawer(),
+        drawer: const MainDrawer(),
         body: SingleChildScrollView(
             child: Column(children: [
           Container(
-            padding: EdgeInsets.only(top: 30),
+            padding: const EdgeInsets.only(top: 30),
             child: Column(
               children: [
                 ListTile(
                   leading: GestureDetector(
                       behavior: HitTestBehavior.translucent,
                       child: Container(
-                          width: 100,
-                          height: 100,
-                          padding: const EdgeInsets.symmetric(vertical: 1.0),
-                          alignment: Alignment.center,
-                          child: Container(
-                            height: 100,
-                            width: 100,
-                            decoration: BoxDecoration(
-                              image: DecorationImage(
-                                image: AssetImage(
-                                  'images/exo1.jpeg',
-                                ),
-                              ),
-                            ),
-                          ))),
-                  onTap: () {
-                    SfPdfViewer.asset('pdf/exo1.pdf',
-                        controller: _pdfViewerController, key: _pdfViewerStateKey);
-                  },
+                        width: 300,
+                        height: 500,
+                        padding: const EdgeInsets.symmetric(vertical: 1.0),
+                        alignment: Alignment.center,
+                        child: SfPdfViewer.asset(
+                          'assets/pdf/exo1.pdf',
+                        ),
+                      )),
                   title: const Text(
                     'Call me baby',
                     style: TextStyle(fontSize: 15),
                   ),
                 ),
-                Divider(
+                const Divider(
                   thickness: 1,
                   color: Colors.black,
                 ),
@@ -110,32 +94,21 @@ class EXOState extends State<EXO> {
                       behavior: HitTestBehavior.translucent,
                       onTap: () {},
                       child: Container(
-                        width: 100,
-                        height: 100,
+                        width: 300,
+                        height: 500,
                         padding: const EdgeInsets.symmetric(vertical: 1.0),
                         alignment: Alignment.center,
-                        child: Container(
-                          height: 100,
-                          width: 100,
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                              image: AssetImage(
-                                'images/exo2.jpeg',
-                              ),
-                            ),
-                          ),
+                        child: SfPdfViewer.asset(
+                          'assets/pdf/exo2.pdf',
                         ),
                       )),
-                  onTap: () {
-                    SfPdfViewer.asset('pdf/exo23.pdf',
-                        controller: _pdfViewerController, key: _pdfViewerStateKey);
-                  },
+                  onTap: () async {},
                   title: const Text(
                     'Monster',
                     style: TextStyle(fontSize: 15),
                   ),
                 ),
-                Divider(
+                const Divider(
                   thickness: 1,
                   color: Colors.black,
                 ),

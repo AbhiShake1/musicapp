@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:fyp/api/django_api.dart';
 import 'package:fyp/core/widgets/main_drawer.dart';
 import 'package:fyp/feature/artist/views/chords/behemoth.dart';
 import 'package:fyp/feature/artist/views/chords/bts.dart';
@@ -9,16 +12,19 @@ import 'package:fyp/feature/artist/views/chords/linkinpark.dart';
 import 'package:fyp/feature/artist/views/chords/metallica.dart';
 import 'package:fyp/feature/artist/views/chords/nepathya.dart';
 import 'package:fyp/feature/artist/views/chords/pantera.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class Artist extends StatefulWidget {
-  @override
-  ArtistState createState() => ArtistState();
-}
+final songsRef = FutureProvider((_) async => await DjangoApi.getAllMusic());
 
-class ArtistState extends State<Artist> {
-  var scaffoldKey = GlobalKey<ScaffoldState>();
+class Artist extends ConsumerWidget {
+  const Artist({Key? key}) : super(key: key);
+
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    var scaffoldKey = GlobalKey<ScaffoldState>();
+    final List songs = ref
+        .watch(songsRef)
+        .maybeWhen(data: (d) => jsonDecode(d ?? '[]'), orElse: () => []);
     return Scaffold(
         key: scaffoldKey,
         appBar: PreferredSize(
@@ -35,9 +41,9 @@ class ArtistState extends State<Artist> {
                   scaffoldKey.currentState?.openDrawer();
                 }),
             backgroundColor: Colors.white,
-            actions: <Widget>[
+            actions: const <Widget>[
               Padding(
-                padding: const EdgeInsets.fromLTRB(0, 30, 80, 0),
+                padding: EdgeInsets.fromLTRB(0, 30, 80, 0),
                 child: Text("Lyrics and chords",
                     style: TextStyle(
                       fontSize: 20,
@@ -47,11 +53,11 @@ class ArtistState extends State<Artist> {
             ],
           ),
         ),
-        drawer: MainDrawer(),
+        drawer: const MainDrawer(),
         body: SingleChildScrollView(
             child: Column(children: [
           Container(
-            padding: EdgeInsets.only(top: 30),
+            padding: const EdgeInsets.only(top: 30),
             child: Column(
               children: [
                 ListTile(
@@ -65,7 +71,7 @@ class ArtistState extends State<Artist> {
                           child: Container(
                             height: 100,
                             width: 100,
-                            decoration: BoxDecoration(
+                            decoration: const BoxDecoration(
                               image: DecorationImage(
                                 image: AssetImage(
                                   'images/exo.jpg',
@@ -84,7 +90,7 @@ class ArtistState extends State<Artist> {
                     style: TextStyle(fontSize: 15),
                   ),
                 ),
-                Divider(
+                const Divider(
                   thickness: 1,
                   color: Colors.black,
                 ),
@@ -100,7 +106,7 @@ class ArtistState extends State<Artist> {
                         child: Container(
                           height: 100,
                           width: 100,
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                             image: DecorationImage(
                               image: AssetImage(
                                 'images/metallica.webp',
@@ -120,7 +126,7 @@ class ArtistState extends State<Artist> {
                     style: TextStyle(fontSize: 15),
                   ),
                 ),
-                Divider(
+                const Divider(
                   thickness: 1,
                   color: Colors.black,
                 ),
@@ -135,7 +141,7 @@ class ArtistState extends State<Artist> {
                           child: Container(
                             height: 100,
                             width: 100,
-                            decoration: BoxDecoration(
+                            decoration: const BoxDecoration(
                               image: DecorationImage(
                                 image: AssetImage(
                                   'images/behemoth.jpeg',
@@ -154,7 +160,7 @@ class ArtistState extends State<Artist> {
                     style: TextStyle(fontSize: 15),
                   ),
                 ),
-                Divider(
+                const Divider(
                   thickness: 1,
                   color: Colors.black,
                 ),
@@ -175,7 +181,7 @@ class ArtistState extends State<Artist> {
                         child: Container(
                           height: 100,
                           width: 100,
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                             image: DecorationImage(
                               image: AssetImage(
                                 'images/bts.webp',
@@ -195,7 +201,7 @@ class ArtistState extends State<Artist> {
                     style: TextStyle(fontSize: 15),
                   ),
                 ),
-                Divider(
+                const Divider(
                   thickness: 1,
                   color: Colors.black,
                 ),
@@ -210,7 +216,7 @@ class ArtistState extends State<Artist> {
                           child: Container(
                             height: 100,
                             width: 100,
-                            decoration: BoxDecoration(
+                            decoration: const BoxDecoration(
                               image: DecorationImage(
                                 image: AssetImage(
                                   'images/evanensce.jpeg',
@@ -229,7 +235,7 @@ class ArtistState extends State<Artist> {
                     style: TextStyle(fontSize: 15),
                   ),
                 ),
-                Divider(
+                const Divider(
                   thickness: 1,
                   color: Colors.black,
                 ),
@@ -250,7 +256,7 @@ class ArtistState extends State<Artist> {
                         child: Container(
                           height: 100,
                           width: 100,
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                             image: DecorationImage(
                               image: AssetImage(
                                 'images/lambofgod.jpeg',
@@ -270,7 +276,7 @@ class ArtistState extends State<Artist> {
                     style: TextStyle(fontSize: 15),
                   ),
                 ),
-                Divider(
+                const Divider(
                   thickness: 1,
                   color: Colors.black,
                 ),
@@ -285,7 +291,7 @@ class ArtistState extends State<Artist> {
                           child: Container(
                             height: 100,
                             width: 100,
-                            decoration: BoxDecoration(
+                            decoration: const BoxDecoration(
                               image: DecorationImage(
                                 image: AssetImage(
                                   'images/linkinpark.jpeg',
@@ -304,7 +310,7 @@ class ArtistState extends State<Artist> {
                     style: TextStyle(fontSize: 15),
                   ),
                 ),
-                Divider(
+                const Divider(
                   thickness: 1,
                   color: Colors.black,
                 ),
@@ -325,7 +331,7 @@ class ArtistState extends State<Artist> {
                         child: Container(
                           height: 100,
                           width: 100,
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                             image: DecorationImage(
                               image: AssetImage(
                                 'images/Nepathya.jpeg',
@@ -345,7 +351,7 @@ class ArtistState extends State<Artist> {
                     style: TextStyle(fontSize: 15),
                   ),
                 ),
-                Divider(
+                const Divider(
                   thickness: 1,
                   color: Colors.black,
                 ),
@@ -360,7 +366,7 @@ class ArtistState extends State<Artist> {
                           child: Container(
                             height: 100,
                             width: 100,
-                            decoration: BoxDecoration(
+                            decoration: const BoxDecoration(
                               image: DecorationImage(
                                 image: AssetImage(
                                   'images/PANTERA.webp',
@@ -379,7 +385,7 @@ class ArtistState extends State<Artist> {
                     style: TextStyle(fontSize: 15),
                   ),
                 ),
-                Divider(
+                const Divider(
                   thickness: 1,
                   color: Colors.black,
                 ),
@@ -395,7 +401,7 @@ class ArtistState extends State<Artist> {
                         child: Container(
                           height: 100,
                           width: 100,
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                             image: DecorationImage(
                               image: AssetImage(
                                 'images/metallica.webp',
@@ -407,7 +413,7 @@ class ArtistState extends State<Artist> {
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => Metallica()),
+                      MaterialPageRoute(builder: (context) => const Metallica()),
                     );
                   },
                   title: const Text(
@@ -415,6 +421,35 @@ class ArtistState extends State<Artist> {
                     style: TextStyle(fontSize: 15),
                   ),
                 ),
+                ...List.generate(
+                    songs.length,
+                    (index) => ListTile(
+                          leading: GestureDetector(
+                              behavior: HitTestBehavior.translucent,
+                              onTap: () {},
+                              child: Container(
+                                width: 100,
+                                height: 100,
+                                padding: const EdgeInsets.symmetric(vertical: 1.0),
+                                alignment: Alignment.center,
+                                child: Container(
+                                  height: 100,
+                                  width: 100,
+                                  decoration: const BoxDecoration(
+                                    image: DecorationImage(
+                                      image: AssetImage(
+                                        'images/metallica.webp',
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              )),
+                          onTap: () {},
+                          title: Text(
+                            songs[index]['title'],
+                            style: const TextStyle(fontSize: 15),
+                          ),
+                        ))
               ],
             ),
           )
