@@ -71,6 +71,25 @@ class DjangoApi {
     return result?.where((element) => element?['id'] == 3).toList();
   }
 
+  static Future<String?> getMusic(String title) async {
+    final response = await post(
+      Uri.parse('https://fyp-music-app-eva.herokuapp.com/api=music_upload/get/'),
+      body: jsonEncode({
+        "title": title,
+      }),
+    );
+    if (response.statusCode >= 400) return null;
+    final body = response.body;
+    return body;
+  }
+
+  static Future<String?> getAllMusic() async {
+    final response = await get(Uri.parse(
+        'https://fyp-music-app-eva.herokuapp.com/api=music_upload/get_all/'));
+    if (response.statusCode >= 400) return null;
+    return response.body;
+  }
+
   static Future<String?> postFeedback(
       String userId, String issues, String description) async {
     final response = await post(
@@ -119,7 +138,8 @@ class DjangoApi {
   static Future<void> requestMusic(
       {required String artist, required String songName}) async {
     await post(
-        Uri.parse('https://fyp-music-app-eva.herokuapp.com/api=request_music/'));
+        Uri.parse('https://fyp-music-app-eva.herokuapp.com/api=request_music/'),
+        body: jsonEncode({'artist': artist, 'song_name': songName}));
   }
 
   static Future<List<String>?> getMusics(

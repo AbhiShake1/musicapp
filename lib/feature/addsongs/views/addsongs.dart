@@ -2,11 +2,11 @@ import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:fyp/api/django_api.dart';
 import 'package:fyp/core/widgets/main_drawer.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:velocity_x/velocity_x.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 
 class AddSongs extends StatefulHookConsumerWidget {
   const AddSongs({Key? key}) : super(key: key);
@@ -136,7 +136,14 @@ class AddSongsState extends ConsumerState<AddSongs> {
                                         borderRadius: BorderRadius.circular(18.0),
                                         side: const BorderSide(),
                                       ),
-                                      onPressed: () async {},
+                                      onPressed: () async {
+                                        if (file != null) {
+                                          await DjangoApi.uploadMusic(
+                                              title: titleController.text,
+                                              author: artistController.text,
+                                              pdf: File(file!.files.single.path!));
+                                        }
+                                      },
                                       padding: const EdgeInsets.all(10.0),
                                       textColor: const Color(0xff4c505b),
                                       child: const Text("Upload",

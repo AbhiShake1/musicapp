@@ -356,7 +356,7 @@ class CustomAlertDialog extends HookWidget {
           child: const Text('Cancel'),
         ),
         FlatButton(
-          onPressed: () => DjangoApi.requestMusic(
+          onPressed: () async => await DjangoApi.requestMusic(
                   artist: artistController.text, songName: songController.text)
               .whenComplete(
             () => context.showToast(
