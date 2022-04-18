@@ -85,7 +85,7 @@ class Artist extends ConsumerWidget {
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => EXO()),
+                      MaterialPageRoute(builder: (context) => const EXO()),
                     );
                   },
                   title: const Text(

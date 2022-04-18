@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fyp/core/widgets/main_drawer.dart';
 import 'package:fyp/feature/artist/addpage.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
+import 'package:velocity_x/velocity_x.dart';
 
 class EXO extends StatefulWidget {
   const EXO({Key? key}) : super(key: key);
@@ -69,17 +70,14 @@ class EXOState extends State<EXO> {
             child: Column(
               children: [
                 ListTile(
-                  leading: GestureDetector(
-                      behavior: HitTestBehavior.translucent,
-                      child: Container(
-                        width: 300,
-                        height: 500,
-                        padding: const EdgeInsets.symmetric(vertical: 1.0),
-                        alignment: Alignment.center,
-                        child: SfPdfViewer.asset(
-                          'assets/pdf/exo1.pdf',
-                        ),
-                      )),
+                  leading: Container(
+                    width: 300,
+                    height: 500,
+                    padding: const EdgeInsets.symmetric(vertical: 1.0),
+                    alignment: Alignment.center,
+                  ),
+                  onTap: () => context.push(
+                      (context) => const PdfView(pdfPath: 'assets/pdf/exo1.pdf')),
                   title: const Text(
                     'Call me baby',
                     style: TextStyle(fontSize: 15),
@@ -90,19 +88,14 @@ class EXOState extends State<EXO> {
                   color: Colors.black,
                 ),
                 ListTile(
-                  leading: GestureDetector(
-                      behavior: HitTestBehavior.translucent,
-                      onTap: () {},
-                      child: Container(
-                        width: 300,
-                        height: 500,
-                        padding: const EdgeInsets.symmetric(vertical: 1.0),
-                        alignment: Alignment.center,
-                        child: SfPdfViewer.asset(
-                          'assets/pdf/exo2.pdf',
-                        ),
-                      )),
-                  onTap: () async {},
+                  leading: Container(
+                    width: 300,
+                    height: 500,
+                    padding: const EdgeInsets.symmetric(vertical: 1.0),
+                    alignment: Alignment.center,
+                  ),
+                  onTap: () => context.push(
+                      (context) => const PdfView(pdfPath: 'assets/pdf/exo2.pdf')),
                   title: const Text(
                     'Monster',
                     style: TextStyle(fontSize: 15),
@@ -116,5 +109,18 @@ class EXOState extends State<EXO> {
             ),
           )
         ])));
+  }
+}
+
+class PdfView extends StatelessWidget {
+  const PdfView({Key? key, required this.pdfPath}) : super(key: key);
+
+  final String pdfPath;
+
+  @override
+  Widget build(BuildContext context) {
+    return SfPdfViewer.asset(
+      pdfPath,
+    );
   }
 }
