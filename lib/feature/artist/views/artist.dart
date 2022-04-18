@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:fyp/api/django_api.dart';
 import 'package:fyp/core/widgets/main_drawer.dart';
+import 'package:fyp/feature/artist/views/artist_song.dart';
 import 'package:fyp/feature/artist/views/chords/behemoth.dart';
 import 'package:fyp/feature/artist/views/chords/bts.dart';
 import 'package:fyp/feature/artist/views/chords/evanensce.dart';
@@ -16,7 +17,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:velocity_x/velocity_x.dart';
 
-final songsRef = FutureProvider((_) async => await DjangoApi.getAllMusic());
+final songsRef =
+    FutureProvider.autoDispose((_) async => await DjangoApi.getAllMusic());
 
 class Artist extends ConsumerWidget {
   const Artist({Key? key}) : super(key: key);
@@ -24,9 +26,9 @@ class Artist extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     var scaffoldKey = GlobalKey<ScaffoldState>();
-    final List songs = ref
+    final Map<String, dynamic> songs = ref
         .watch(songsRef)
-        .maybeWhen(data: (d) => jsonDecode(d ?? '[]'), orElse: () => []);
+        .maybeWhen(data: (d) => jsonDecode(d ?? '{}'), orElse: () => {});
     return Scaffold(
         key: scaffoldKey,
         appBar: PreferredSize(
@@ -426,9 +428,8 @@ class Artist extends ConsumerWidget {
                   thickness: 1,
                   color: Colors.black,
                 ),
-                ...List.generate(
-                  songs.length,
-                  (index) => Column(
+                for (final entry in songs.entries)
+                  Column(
                     children: [
                       ListTile(
                         leading: Container(
@@ -449,10 +450,12 @@ class Artist extends ConsumerWidget {
                           ),
                         ),
                         onTap: () async {
-                          await launch(songs[index]['url']);
+                          context.push(
+                            (context) => ArtistSong(songDetailsList: entry.value),
+                          );
                         },
                         title: Text(
-                          songs[index]['title'],
+                          entry.key,
                           style: const TextStyle(fontSize: 15),
                         ),
                       ),
@@ -462,7 +465,6 @@ class Artist extends ConsumerWidget {
                       ),
                     ],
                   ),
-                )
               ],
             ),
           )

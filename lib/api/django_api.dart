@@ -90,7 +90,6 @@ class DjangoApi {
     final response = await get(Uri.parse(
         'https://music-app-backend-production.up.railway.app/api=music_upload/get_all/'));
     if (response.statusCode >= 400) return null;
-    print(response.body);
     return response.body;
   }
 
@@ -154,7 +153,6 @@ class DjangoApi {
       Uri.parse(
           'https://music-app-backend-production.up.railway.app/api=music_upload/get/'),
     );
-    print(response.body);
     if (response.statusCode >= 400) return null;
     return jsonDecode(response.body);
   }
