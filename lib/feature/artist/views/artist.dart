@@ -14,6 +14,7 @@ import 'package:fyp/feature/artist/views/chords/nepathya.dart';
 import 'package:fyp/feature/artist/views/chords/pantera.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:velocity_x/velocity_x.dart';
 
 final songsRef = FutureProvider((_) async => await DjangoApi.getAllMusic());
 
@@ -358,23 +359,25 @@ class Artist extends ConsumerWidget {
                 ),
                 ListTile(
                   leading: GestureDetector(
-                      behavior: HitTestBehavior.translucent,
+                    behavior: HitTestBehavior.translucent,
+                    child: Container(
+                      width: 100,
+                      height: 100,
+                      padding: const EdgeInsets.symmetric(vertical: 1.0),
+                      alignment: Alignment.center,
                       child: Container(
-                          width: 100,
-                          height: 100,
-                          padding: const EdgeInsets.symmetric(vertical: 1.0),
-                          alignment: Alignment.center,
-                          child: Container(
-                            height: 100,
-                            width: 100,
-                            decoration: const BoxDecoration(
-                              image: DecorationImage(
-                                image: AssetImage(
-                                  'images/PANTERA.webp',
-                                ),
-                              ),
+                        height: 100,
+                        width: 100,
+                        decoration: const BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage(
+                              'images/PANTERA.webp',
                             ),
-                          ))),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
                   onTap: () {
                     Navigator.push(
                       context,
@@ -391,26 +394,23 @@ class Artist extends ConsumerWidget {
                   color: Colors.black,
                 ),
                 ListTile(
-                  leading: GestureDetector(
-                      behavior: HitTestBehavior.translucent,
-                      onTap: () {},
-                      child: Container(
-                        width: 100,
-                        height: 100,
-                        padding: const EdgeInsets.symmetric(vertical: 1.0),
-                        alignment: Alignment.center,
-                        child: Container(
-                          height: 100,
-                          width: 100,
-                          decoration: const BoxDecoration(
-                            image: DecorationImage(
-                              image: AssetImage(
-                                'images/metallica.webp',
-                              ),
-                            ),
+                  leading: Container(
+                    width: 100,
+                    height: 100,
+                    padding: const EdgeInsets.symmetric(vertical: 1.0),
+                    alignment: Alignment.center,
+                    child: Container(
+                      height: 100,
+                      width: 100,
+                      decoration: const BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage(
+                            'images/metallica.webp',
                           ),
                         ),
-                      )),
+                      ),
+                    ),
+                  ),
                   onTap: () {
                     Navigator.push(
                       context,
@@ -422,39 +422,47 @@ class Artist extends ConsumerWidget {
                     style: TextStyle(fontSize: 15),
                   ),
                 ),
+                const Divider(
+                  thickness: 1,
+                  color: Colors.black,
+                ),
                 ...List.generate(
-                    songs.length,
-                    (index) => ListTile(
-                          leading: GestureDetector(
-                              behavior: HitTestBehavior.translucent,
-                              onTap: () async {
-                                await launch(songs[index]['url']);
-                              },
-                              child: Container(
-                                width: 100,
-                                height: 100,
-                                padding: const EdgeInsets.symmetric(vertical: 1.0),
-                                alignment: Alignment.center,
-                                child: Container(
-                                  height: 100,
-                                  width: 100,
-                                  decoration: const BoxDecoration(
-                                    image: DecorationImage(
-                                      image: AssetImage(
-                                        'images/metallica.webp',
-                                      ),
-                                    ),
-                                  ),
+                  songs.length,
+                  (index) => Column(
+                    children: [
+                      ListTile(
+                        leading: Container(
+                          width: 100,
+                          height: 100,
+                          padding: const EdgeInsets.symmetric(vertical: 1.0),
+                          alignment: Alignment.center,
+                          child: Container(
+                            height: 100,
+                            width: 100,
+                            decoration: const BoxDecoration(
+                              image: DecorationImage(
+                                image: AssetImage(
+                                  'images/metallica.webp',
                                 ),
-                              )),
-                          onTap: () async {
-                            await launch(songs[index]['url']);
-                          },
-                          title: Text(
-                            songs[index]['title'],
-                            style: const TextStyle(fontSize: 15),
+                              ),
+                            ),
                           ),
-                        ))
+                        ),
+                        onTap: () async {
+                          await launch(songs[index]['url']);
+                        },
+                        title: Text(
+                          songs[index]['title'],
+                          style: const TextStyle(fontSize: 15),
+                        ),
+                      ),
+                      const Divider(
+                        thickness: 1,
+                        color: Colors.black,
+                      ),
+                    ],
+                  ),
+                )
               ],
             ),
           )
