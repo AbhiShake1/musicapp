@@ -14,7 +14,6 @@ import 'package:fyp/feature/artist/views/chords/metallica.dart';
 import 'package:fyp/feature/artist/views/chords/nepathya.dart';
 import 'package:fyp/feature/artist/views/chords/pantera.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 final songsRef =

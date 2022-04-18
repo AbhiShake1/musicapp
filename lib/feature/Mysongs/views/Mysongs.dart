@@ -1,17 +1,22 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:fyp/core/widgets/main_drawer.dart';
+import 'package:fyp/feature/artist/views/artist_song.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:velocity_x/velocity_x.dart';
 
-class Mysongs extends StatefulWidget {
+import '../../artist/views/artist.dart';
+
+class Mysongs extends ConsumerWidget {
   const Mysongs({Key? key}) : super(key: key);
 
   @override
-  State<Mysongs> createState() => _MysongsState();
-}
-
-class _MysongsState extends State<Mysongs> {
-  var scaffoldKey = GlobalKey<ScaffoldState>();
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    var scaffoldKey = GlobalKey<ScaffoldState>();
+    final Map<String, dynamic> songs = ref
+        .watch(songsRef)
+        .maybeWhen(data: (d) => jsonDecode(d ?? '{}'), orElse: () => {});
     return Scaffold(
         key: scaffoldKey,
         appBar: PreferredSize(
@@ -28,23 +33,61 @@ class _MysongsState extends State<Mysongs> {
                   scaffoldKey.currentState?.openDrawer();
                 }),
             backgroundColor: Colors.white,
-            actions: const [
+            actions: const <Widget>[
               Padding(
-                  padding: EdgeInsets.fromLTRB(0, 25, 150, 0),
-                  child: Text(
-                    'Dashboard',
+                padding: EdgeInsets.fromLTRB(0, 30, 80, 0),
+                child: Text("Lyrics and chords",
                     style: TextStyle(
-                        color: Colors.black,
-                        fontFamily: "SanFranciscos",
-                        fontSize: 20,
-                        decorationColor: Colors.white,
-                        fontWeight: FontWeight.bold),
-                  )),
+                      fontSize: 20,
+                      color: Colors.black,
+                    )),
+              ),
             ],
           ),
         ),
-        extendBodyBehindAppBar: true,
         drawer: const MainDrawer(),
-        body: Container(color: Colors.black, child: Column()));
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              for (final entry in songs.entries)
+                Column(
+                  children: [
+                    ListTile(
+                      leading: Container(
+                        width: 100,
+                        height: 100,
+                        padding: const EdgeInsets.symmetric(vertical: 1.0),
+                        alignment: Alignment.center,
+                        child: Container(
+                          height: 100,
+                          width: 100,
+                          decoration: const BoxDecoration(
+                            image: DecorationImage(
+                              image: AssetImage(
+                                'images/metallica.webp',
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      onTap: () async {
+                        context.push(
+                          (context) => ArtistSong(songDetailsList: entry.value),
+                        );
+                      },
+                      title: Text(
+                        entry.key,
+                        style: const TextStyle(fontSize: 15),
+                      ),
+                    ),
+                    const Divider(
+                      thickness: 1,
+                      color: Colors.black,
+                    ),
+                  ],
+                ),
+            ],
+          ),
+        ));
   }
 }
