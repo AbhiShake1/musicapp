@@ -71,8 +71,8 @@ class EXOState extends State<EXO> {
               children: [
                 ListTile(
                   leading: Container(
-                    width: 300,
-                    height: 500,
+                    width: 100,
+                    height: 100,
                     padding: const EdgeInsets.symmetric(vertical: 1.0),
                     alignment: Alignment.center,
                   ),
@@ -89,8 +89,8 @@ class EXOState extends State<EXO> {
                 ),
                 ListTile(
                   leading: Container(
-                    width: 300,
-                    height: 500,
+                    width: 100,
+                    height: 100,
                     padding: const EdgeInsets.symmetric(vertical: 1.0),
                     alignment: Alignment.center,
                   ),
