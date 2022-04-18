@@ -10,7 +10,8 @@ class DjangoApi {
   static Future<User?> createUser(String email, String password,
       {String? firstName, String? lastName}) async {
     final response = await post(
-      Uri.parse('https://fyp-music-app-eva.herokuapp.com/api=create_user/'),
+      Uri.parse(
+          'https://music-app-backend-production.up.railway.app/api=create_user/'),
       body: jsonEncode({
         "username": email,
         "email": email,
@@ -28,7 +29,7 @@ class DjangoApi {
   static Future<User?> loginWithEmailAndPassword(
       String email, String password) async {
     final response = await post(
-      Uri.parse('https://fyp-music-app-eva.herokuapp.com/api=signin/'),
+      Uri.parse('https://music-app-backend-production.up.railway.app/api=signin/'),
       body: jsonEncode({
         "username": email,
         "email": email,
@@ -43,7 +44,8 @@ class DjangoApi {
 
   static Future<User?> resetPassword(String email, String newPassword) async {
     final response = await post(
-      Uri.parse('https://fyp-music-app-eva.herokuapp.com/api=forgot_password/'),
+      Uri.parse(
+          'https://music-app-backend-production.up.railway.app/api=forgot_password/'),
       body: jsonEncode({
         "email": email,
         "new_password": newPassword,
@@ -56,15 +58,15 @@ class DjangoApi {
   }
 
   static Future<String?> signout() async {
-    final response =
-        await get(Uri.parse('https://fyp-music-app-eva.herokuapp.com/api=signout/'));
+    final response = await get(Uri.parse(
+        'https://music-app-backend-production.up.railway.app/api=signout/'));
     if (response.statusCode >= 400) return null;
     return 'Successful';
   }
 
   static Future<List<Map<String, dynamic>?>?> getFeedbacks(int postId) async {
-    final response = await get(
-        Uri.parse('https://fyp-music-app-eva.herokuapp.com/api=feedback/'));
+    final response = await get(Uri.parse(
+        'https://music-app-backend-production.up.railway.app/api=feedback/'));
     if (response.statusCode == 401) return null;
     final List<Map<String, dynamic>?>? result =
         json.decode(response.body)['results'];
@@ -73,7 +75,8 @@ class DjangoApi {
 
   static Future<String?> getMusic(String title) async {
     final response = await post(
-      Uri.parse('https://fyp-music-app-eva.herokuapp.com/api=music_upload/get/'),
+      Uri.parse(
+          'https://music-app-backend-production.up.railway.app/api=music_upload/get/'),
       body: jsonEncode({
         "title": title,
       }),
@@ -85,15 +88,16 @@ class DjangoApi {
 
   static Future<String?> getAllMusic() async {
     final response = await get(Uri.parse(
-        'https://fyp-music-app-eva.herokuapp.com/api=music_upload/get_all/'));
+        'https://music-app-backend-production.up.railway.app/api=music_upload/get_all/'));
     if (response.statusCode >= 400) return null;
+    print(response.body);
     return response.body;
   }
 
   static Future<String?> postFeedback(
       String userId, String issues, String description) async {
     final response = await post(
-      Uri.parse('https://fyp-music-app-eva.herokuapp.com/api=feedback/'),
+      Uri.parse('https://music-app-backend-production.up.railway.app/api=feedback/'),
       body: jsonEncode({
         "username": userId,
         "issues": issues,
@@ -106,8 +110,8 @@ class DjangoApi {
   }
 
   static Future<List?> getNotifications() async {
-    final response = await get(
-        Uri.parse('https://fyp-music-app-eva.herokuapp.com/api=notifications/get/'));
+    final response = await get(Uri.parse(
+        'https://music-app-backend-production.up.railway.app/api=notifications/get/'));
     if (response.statusCode == 401) return null;
     final List? result = json.decode(response.body);
     return result;
@@ -117,18 +121,18 @@ class DjangoApi {
       {required String title, required String author, required File pdf}) async {
     final request = MultipartRequest(
       'POST',
-      Uri.parse('https://fyp-music-app-eva.herokuapp.com/api=music_upload/'),
+      Uri.parse(
+          'https://music-app-backend-production.up.railway.app/api=music_upload/'),
     );
     request.files.add(
-      MultipartFile.fromBytes(
+      await MultipartFile.fromPath(
         'music',
-        await pdf.readAsBytes(),
-        contentType: MediaType('audio', 'mpeg'),
+        pdf.path,
       ),
     );
 
     request.fields['title'] = title;
-    request.fields['author'] = author;
+    request.fields['artist'] = author;
 
     final response = await request.send();
     if (response.statusCode >= 400) return null;
@@ -138,7 +142,8 @@ class DjangoApi {
   static Future<void> requestMusic(
       {required String artist, required String songName}) async {
     await post(
-        Uri.parse('https://fyp-music-app-eva.herokuapp.com/api=request_music/'),
+        Uri.parse(
+            'https://music-app-backend-production.up.railway.app/api=request_music/'),
         body: jsonEncode({'artist': artist, 'song_name': songName}));
   }
 
@@ -146,9 +151,10 @@ class DjangoApi {
     File musicFile,
   ) async {
     final response = await get(
-      Uri.parse('https://fyp-music-app-eva.herokuapp.com/api=music_upload/get/'),
+      Uri.parse(
+          'https://music-app-backend-production.up.railway.app/api=music_upload/get/'),
     );
-
+    print(response.body);
     if (response.statusCode >= 400) return null;
     return jsonDecode(response.body);
   }
@@ -158,7 +164,7 @@ class DjangoApi {
   ) async {
     final response = await delete(
         Uri.parse(
-            'https://fyp-music-app-eva.herokuapp.com/api=music_upload/delete/'),
+            'https://music-app-backend-production.up.railway.app/api=music_upload/delete/'),
         body: jsonEncode({'file_name': musicName}));
 
     if (response.statusCode >= 400) return null;

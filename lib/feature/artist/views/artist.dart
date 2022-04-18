@@ -13,6 +13,7 @@ import 'package:fyp/feature/artist/views/chords/metallica.dart';
 import 'package:fyp/feature/artist/views/chords/nepathya.dart';
 import 'package:fyp/feature/artist/views/chords/pantera.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 final songsRef = FutureProvider((_) async => await DjangoApi.getAllMusic());
 
@@ -426,7 +427,9 @@ class Artist extends ConsumerWidget {
                     (index) => ListTile(
                           leading: GestureDetector(
                               behavior: HitTestBehavior.translucent,
-                              onTap: () {},
+                              onTap: () async {
+                                await launch(songs[index]['url']);
+                              },
                               child: Container(
                                 width: 100,
                                 height: 100,
@@ -444,7 +447,9 @@ class Artist extends ConsumerWidget {
                                   ),
                                 ),
                               )),
-                          onTap: () {},
+                          onTap: () async {
+                            await launch(songs[index]['url']);
+                          },
                           title: Text(
                             songs[index]['title'],
                             style: const TextStyle(fontSize: 15),

@@ -8,6 +8,8 @@ import 'package:fyp/core/widgets/main_drawer.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:velocity_x/velocity_x.dart';
 
+import '../../../core/providers/loading_provider.dart';
+
 class AddSongs extends StatefulHookConsumerWidget {
   const AddSongs({Key? key}) : super(key: key);
 
@@ -106,11 +108,15 @@ class AddSongsState extends ConsumerState<AddSongs> {
                                 InkWell(
                                   onTap: () async {
                                     if (file != null) {
-                                      DjangoApi.uploadMusic(
+                                      final result = await DjangoApi.uploadMusic(
                                         title: titleController.text,
                                         author: artistController.text,
                                         pdf: File(file!.files.first.path!),
                                       );
+                                      if (result != null) {
+                                        context.showToast(
+                                            msg: 'Uploaded successfully');
+                                      }
                                     } else {
                                       context.showToast(
                                           msg: 'Please provide a file');
@@ -138,16 +144,34 @@ class AddSongsState extends ConsumerState<AddSongs> {
                                       ),
                                       onPressed: () async {
                                         if (file != null) {
-                                          await DjangoApi.uploadMusic(
+                                          ref.read(loadingRef.notifier).loading =
+                                              true;
+                                          final result = await DjangoApi.uploadMusic(
                                               title: titleController.text,
                                               author: artistController.text,
                                               pdf: File(file!.files.single.path!));
+                                          context.showToast(
+                                              msg: result != null
+                                                  ? 'Song added successfully'
+                                                  : 'Failed to upload');
+                                          ref.read(loadingRef.notifier).loading =
+                                              false;
+                                        } else {
+                                          context.showToast(
+                                              msg: 'Please provide a file');
+                                          ref.read(loadingRef.notifier).loading =
+                                              false;
                                         }
                                       },
                                       padding: const EdgeInsets.all(10.0),
                                       textColor: const Color(0xff4c505b),
-                                      child: const Text("Upload",
-                                          style: TextStyle(fontSize: 15)),
+                                      child: Consumer(
+                                        builder: (context, ref, child) =>
+                                            ref.watch(loadingRef)
+                                                ? const CircularProgressIndicator()
+                                                : const Text("Upload",
+                                                    style: TextStyle(fontSize: 15)),
+                                      ),
                                     ),
                                     const SizedBox(
                                       height: 49,
