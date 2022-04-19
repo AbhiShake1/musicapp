@@ -5,6 +5,7 @@ import 'package:fyp/core/providers/current_user_provider.dart';
 import 'package:fyp/core/widgets/bottom_nav_bar/views/bottom_nav_bar.dart';
 import 'package:fyp/feature/signup/views/signup_page.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 import '../../../core/preferences.dart';
@@ -80,32 +81,16 @@ class LoginPage extends HookWidget {
                   ),
                   Row(
                     children: [
-                      HookConsumer(
-                        builder: (context, ref, child) {
-                          final fLoading = useState(false);
-                          return InkWell(
-                            child: Container(
-                              padding: const EdgeInsets.only(left: 150, top: 1),
-                              child: fLoading.value
-                                  ? const CircularProgressIndicator()
-                                  : const Text(
-                                      'Forgot password?',
-                                      style: TextStyle(
-                                          color: Colors.white, fontSize: 15),
-                                    ),
-                            ),
-                            onTap: () async {
-                              fLoading.value = true;
-                              final user = await DjangoApi.resetPassword(
-                                  emailController.text, passwordController.text);
-                              context.showToast(
-                                  msg: user == null
-                                      ? 'Something went wrong'
-                                      : 'successfully reset');
-                              fLoading.value = false;
-                            },
-                          );
-                        },
+                      GestureDetector(
+                        child: Container(
+                          padding: const EdgeInsets.only(left: 150, top: 1),
+                          child: const Text(
+                            'Forgot password?',
+                            style: TextStyle(color: Colors.white, fontSize: 15),
+                          ),
+                        ),
+                        onTap: () async => await launch(
+                            'https://music-app-backend-production.up.railway.app/api=forgot_password/recover/'),
                       ),
                     ],
                   ),
